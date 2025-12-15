@@ -1,0 +1,25 @@
+/* Floating heart particles */
+.heart {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.6);
+  animation: floatUp 6s linear infinite;
+  font-size: 1.2rem;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Hearts background pattern */
+.bg-hearts {
+  background-image: url("https://png.pngtree.com/png-clipart/20201208/original/pngtree-light-red-love-heart-pattern-png-image_5640127.jpg");
+  background-size: contain;
+  opacity: 0.15;
+}
