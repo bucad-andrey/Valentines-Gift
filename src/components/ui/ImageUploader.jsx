@@ -22,38 +22,49 @@ function ImageUploader({
   const inputRef = useRef(null);
   const [preview, setPreview] = useState(initialImage);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleClick = () => {
-    inputRef.current.click();
+    inputRef.current?.click();
   };
 
   const uploadToCloudinary = async (file) => {
-    setLoading(true);
+  setLoading(true);
+  setError(null);
 
-    const formData = new FormData();
-    formData.append("file", file);
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append(
+    "upload_preset",
+    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+  );
 
-    // 🔴 REPLACE THESE
-    formData.append("upload_preset", "YOUR_UPLOAD_PRESET");
+  try {
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+      }/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
-    try {
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+    const data = await response.json();
 
-      const data = await res.json();
-      setPreview(data.secure_url);
-      onUpload?.(data.secure_url);
-    } catch (err) {
-      console.error("Cloudinary upload failed", err);
-    } finally {
-      setLoading(false);
+    if (!response.ok || data.error) {
+      throw new Error(data?.error?.message || "Cloudinary upload failed");
     }
-  };
+
+    setPreview(data.secure_url);
+    onUpload?.(data.secure_url);
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -88,7 +99,7 @@ function ImageUploader({
       />
 
       {loading ? (
-        <span className="text-xs">...</span>
+        <span className="text-xs">Uploading...</span>
       ) : preview ? (
         <img
           src={preview}
@@ -97,6 +108,13 @@ function ImageUploader({
         />
       ) : (
         <span className="text-xl">+</span>
+      )}
+
+      {/* ERROR BADGE */}
+      {error && (
+        <div className="absolute bottom-0 left-0 right-0 bg-red-600 text-xs text-white text-center px-1">
+          {error}
+        </div>
       )}
     </div>
   );
