@@ -3,18 +3,18 @@ import React, { useRef, useState } from "react";
 const animations = {
   pop: "animate-[pop_0.3s_ease-out]",
   fade: "animate-[fade_0.3s_ease-out]",
-  "slide-left": "animate-[slideLeft_0.3s_ease-out]",
-  "slide-right": "animate-[slideRight_0.3s_ease-out]",
+  "slide-left": "animate-[slideLeft_0.5s_ease-out]",
+  "slide-right": "animate-[slideRight_0.5s_ease-out]",
 };
 
 function ImageUploader({
-  width = "48px",
-  height = "48px",
+  width = "200px",
+  height = "200px",
   top,
   right,
   bottom,
   left,
-  zIndex = 50,
+  zIndex = 60,
   animationType = "pop",
   initialImage = null,
   onUpload,
@@ -85,7 +85,7 @@ function ImageUploader({
         height,
         zIndex,
       }}
-      className={`rounded-full bg-rose-500 text-white shadow-lg cursor-pointer
+      className={`rounded-2xl bg-rose-500 text-white shadow-lg cursor-pointer
       flex items-center justify-center overflow-hidden
       ${animations[animationType]}`}
       onClick={handleClick}
