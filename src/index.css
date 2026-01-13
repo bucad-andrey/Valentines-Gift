@@ -1,5 +1,51 @@
 @import "tailwindcss";
 
+@theme {
+ /* === Brand Colors === */
+ --color-primary: #f43f5e;        /* rose-500 */
+ --color-primary-hover: #e11d48;  /* rose-600 */
+ --color-primary-soft: #ffe4e6;   /* rose-100 */
+ --color-secondary-soft: #fbcfe8; /* pink-200 */
+
+ /* === Borders === */
+ --color-border-soft: #fecdd3;    /* rose-200 */
+ --color-border-focus: #fb7185;   /* rose-400 */
+
+ /* === Surfaces === */
+ --color-surface-main: rgba(255, 255, 255, 0.7);
+ --color-surface-glass: rgba(255, 255, 255, 0.4);
+
+ /* === Text === */
+ --color-primary-text: #1f2937;   /* gray-800 */
+ --color-secondary-text: #374151; /* gray-700 */
+ --color-muted-text: #4b5563;     /* gray-600 */
+
+ /* === Status === */
+ --color-success: #16a34a; /* green-600 */
+ --color-error: #dc2626;   /* red-600 */
+ --color-disabled: #d1d5db;/* gray-300 */
+
+ --box-shadow-soft: 0 4px 20px rgba(0,0,0,0.06);
+ --box-shadow-card: 0 6px 25px rgba(0,0,0,0.08);
+ --box-shadow-glow: 0 0 15px rgba(255, 111, 167, 0.5);
+
+ --spacing-18: 4.5rem;
+ --spacing-22: 5.5rem;
+
+ --animation-float: float 3s ease-in-out infinite;
+ --animation-pop: pop .25s ease-out;
+
+
+ /* === Font Families === */
+ --font-heading: "Poppins", sans-serif;
+ --font-body: "Inter", sans-serif;
+ --font-fancy: "Quicksand", cursive;
+
+ /* === Border Radius === */
+ --border-radius-xl: 1.25rem;
+ --border-radius-2xl: 1.75rem;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -15,6 +61,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -26,8 +73,6 @@ a:hover {
 
 body {
   min-width: 320px;
-  max-height: 100vh;
-  overflow-y: hidden;
 }
 
 h1 {

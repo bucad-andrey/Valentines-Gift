@@ -6,6 +6,7 @@ import Message3 from "../pages/SharePage";
 function MainContent() {
   return (
     <main className="pt-20 px-6">
+
       <Routes>
         <Route path="/" element={<Navigate to="/message1" replace />} />
         <Route path="/message1" element={<Message1 />} />
