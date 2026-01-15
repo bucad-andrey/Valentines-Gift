@@ -14,7 +14,7 @@ function ImageUploader({
   right,
   bottom,
   left,
-  zIndex = 60,
+  zIndex = 10,
   animationType = "pop",
   initialImage = null,
   onUpload,
@@ -76,7 +76,7 @@ function ImageUploader({
   return (
     <div
       style={{
-        position: "absolute",
+        
         top,
         right,
         bottom,
