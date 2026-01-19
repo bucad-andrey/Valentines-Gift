@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Message1 from "../pages/IntroPage";
 import Message2 from "../pages/LovePage";
 import Message3 from "../pages/SharePage";
-import Preview from "../games/chasemyHeart/ChaseMyHeart";
+import Preview from "../games/eatMe/EatMe";
 
 function MainContent() {
   return (

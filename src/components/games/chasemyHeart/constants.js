@@ -3,8 +3,8 @@ export const GAME_CONFIG = {
   HEARTS_TO_WIN: 15,
   STARTING_LIVES: 3,
   TIME_LIMIT: 30,
-  MAX_ITEMS: 10,
-  BOMB_CHANCE: 0.4,
+  MAX_ITEMS: 15,
+  BOMB_CHANCE: 0.3,
 };
 
 export const MESSAGES = {

@@ -12,6 +12,13 @@ const initialState = {
   message: "",
 };
 
+const bombImages = [
+  "/bomb.png",
+  "/bomb.png",
+  "/bomb.png",
+];
+
+
 function gameReducer(state, action) {
     /*
     GAME IDEA : 1ST PAGE
@@ -123,10 +130,14 @@ function ChaseMyHeart() {
       const newItem = {
         id: crypto.randomUUID(),
         type: isBomb ? "bomb" : "heart",
-        x: Math.random() * 80 + 10, // avoid edges
+        x: Math.random() * 80 + 10,
         size: Math.random() * 30 + 40,
         expiresAt: Date.now() + 3000,
+        image: isBomb
+          ? bombImages[Math.floor(Math.random() * bombImages.length)]
+          :  "/heart.png",
       };
+      
   
       dispatch({ type: "SPAWN_ITEM", payload: newItem });
     }, spawnDelay);
@@ -151,7 +162,7 @@ function ChaseMyHeart() {
   return (
     <div className="relative min-h-screen bg-pink-100 flex flex-col items-center justify-center overflow-hidden">
       {/* HUD */}
-      <div className="flex gap-6 text-lg font-semibold mb-4 text-black">
+      <div className="flex gap-6 text-lg font-semibold mb-4 text-black absolute top-0">
         <span>❤️ {state.score}/{GAME_CONFIG.HEARTS_TO_WIN}</span>
         <span>💣 Lives: {state.lives}</span>
         <span>⏱ {state.timeLeft}s</span>
@@ -174,20 +185,24 @@ function ChaseMyHeart() {
       {state.status === "playing" && (
   <div className="absolute inset-0">
     {state.items.map(item => (
-      <FloatingItem
-        key={item.id}
-        item={item}
-        onClick={() => {
-          dispatch({ type: "REMOVE_ITEM", payload: item.id });
+  <FloatingItem
+    key={item.id}
+    item={item}
+    onClick={() => {
+      // ✅ THIS is where it belongs
+      if (state.status !== "playing") return;
 
-          if (item.type === "heart") {
-            dispatch({ type: "GAIN_POINT" });
-          } else {
-            dispatch({ type: "HIT_BOMB" });
-          }
-        }}
-      />
-    ))}
+      dispatch({ type: "REMOVE_ITEM", payload: item.id });
+
+      if (item.type === "heart") {
+        dispatch({ type: "GAIN_POINT" });
+      } else {
+        dispatch({ type: "HIT_BOMB" });
+      }
+    }}
+  />
+))}
+
   </div>
 )}
 
