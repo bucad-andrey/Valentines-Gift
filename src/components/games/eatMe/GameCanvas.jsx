@@ -35,7 +35,17 @@ function GameCanvas({ snake, food }) {
     ctx.fillRect(food.x * cellSize, food.y * cellSize, cellSize, cellSize);
   }, [snake, food]);
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        border: "4px solid #ff8fb1",
+        borderRadius: "16px",
+        boxShadow: "0 8px 20px rgba(255, 143, 177, 0.35)",
+        backgroundColor: "#fff",
+      }}
+    />
+  );
 }
 
 export default GameCanvas;

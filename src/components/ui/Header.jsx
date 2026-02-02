@@ -7,7 +7,10 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const tabs = ["message1", "message2", "message3", "preview"];
+  const tabs = [
+    "message1", "message2", "message3", 
+    'game1', 'game2', 'game3',
+     "preview"];
 
   return (
     <header className="fixed top-0 right-0 z-50">

@@ -44,9 +44,9 @@ function EatMe() {
             fontSize: "24px",
           }}
         >
-          {game.status === "WIN" && <p>You won 💖</p>}
-          {game.status === "LOSE" && <p>Don't eat yourself 😅</p>}
-          {game.status === "WALL" && <p>Don't eat the wall 😂</p>}
+          {game.status === "WIN" && <p className="text-black">You won 💖</p>}
+          {game.status === "LOSE" && <p className="text-black">Don't eat yourself 😅</p>}
+          {game.status === "WALL" && <p className="text-black">Don't eat the wall 😂</p>}
 
           <button
             style={{
