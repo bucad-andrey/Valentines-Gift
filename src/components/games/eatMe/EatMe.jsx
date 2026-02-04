@@ -22,14 +22,16 @@ function EatMe() {
   
 
   return (
-    <div style={{ textAlign: "center", position: "relative" }}>
+    <div className="relative text-center flex justify-center">
+      <div>
       <h2>Eat Me 💖</h2>
       <GameCanvas snake={game.snake} food={game.food} />
       <p>Score: {game.score}</p>
+      </div>
 
       {/* Overlay */}
       {showOverlay && (
-        <div
+        <div  
           style={{
             position: "absolute",
             top: 0,

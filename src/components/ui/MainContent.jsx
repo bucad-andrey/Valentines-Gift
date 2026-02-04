@@ -6,6 +6,7 @@ import Preview from "../games/puzzle/Puzzle";
 import ChaseMe from '../games/chasemyHeart/ChaseMyHeart'
 import EatMe from '../games/eatMe/EatMe'
 import Puzzle from '../games/puzzle/Puzzle'
+import Envelope from '../pages/EnvelopeGate'
 
 function MainContent() {
   return (
@@ -13,6 +14,7 @@ function MainContent() {
 
       <Routes>
         <Route path="/" element={<Navigate to="/message1" replace />} />
+        <Route path="/envelope" element={<Envelope />} />
         <Route path="/message1" element={<Message1 />} />
         <Route path="/message2" element={<Message2 />} />
         <Route path="/message3" element={<Message3 />} />

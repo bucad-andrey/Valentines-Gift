@@ -39,7 +39,7 @@ function GameCanvas({ snake, food }) {
     <canvas
       ref={canvasRef}
       style={{
-        border: "4px solid #ff8fb1",
+        border: "2px solid #ff8fb1",
         borderRadius: "16px",
         boxShadow: "0 8px 20px rgba(255, 143, 177, 0.35)",
         backgroundColor: "#fff",
