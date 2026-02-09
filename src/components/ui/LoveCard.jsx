@@ -1,23 +1,46 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-function LoveCard() {
+function LoveCard({
+  index,
+  mode = "edit", // "edit" | "view"
+  imageUrl = null,
+  messageText = "",
+  onImageFileChange,
+  onMessageChange,
+  onFlip,
+}) {
   //You can upload picture
   //When clicked it will reveal the Story behind that pricture
   //When the picture should be uploaded in the firestore as URL(through Cloudinary)
 
   const fileInputRef = useRef(null);
 
-  const [image, setImage] = useState(null);
-  const [message, setMessage] = useState("");
+  const [image, setImage] = useState(imageUrl);
+  const [message, setMessage] = useState(messageText);
   const [side, setSide] = useState("front"); // front | back
+
+  // Keep local state in sync when parent provides existing data
+  useEffect(() => {
+    setImage(imageUrl);
+  }, [imageUrl]);
+
+  useEffect(() => {
+    setMessage(messageText);
+  }, [messageText]);
 
   /* ---------- IMAGE UPLOAD ---------- */
   const handleFlip = () => {
-    if (!image) {
-      fileInputRef.current.click();
+    // In edit mode, clicking an empty card should open file picker.
+    if (mode === "edit" && !image) {
+      fileInputRef.current?.click();
       return;
     }
-    setSide(prev => (prev === "front" ? "back" : "front"));
+
+    setSide((prev) => {
+      const next = prev === "front" ? "back" : "front";
+      onFlip?.(index, next);
+      return next;
+    });
   };
 
   const handleFileChange = (e) => {
@@ -27,9 +50,8 @@ function LoveCard() {
     const preview = URL.createObjectURL(file);
     setImage(preview);
 
-    // TODO:
-    // 1. Upload to Cloudinary
-    // 2. Save returned URL to Firestore
+    // Bubble file up to parent so it can handle upload + persistence
+    onImageFileChange?.(index, file);
   };
 
   const handleReplaceImage = (e) => {
@@ -71,8 +93,8 @@ function LoveCard() {
             )}
           </div>
 
-          {/* NO-FLIP ZONE */}
-          {image && side === "front" && (
+          {/* NO-FLIP ZONE (edit only) */}
+          {mode === "edit" && image && side === "front" && (
             <button
               onClick={handleReplaceImage}
               className="absolute bottom-3 right-3
@@ -84,13 +106,15 @@ function LoveCard() {
             </button>
           )}
 
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*,gif"
-            hidden
-            onChange={handleFileChange}
-          />
+          {mode === "edit" && (
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,gif"
+              hidden
+              onChange={handleFileChange}
+            />
+          )}
         </div>
 
         {/* BACK — MESSAGE */}
@@ -102,15 +126,25 @@ function LoveCard() {
                      [backface-visibility:hidden]"
           onClick={handleFlip}
         >
-          <textarea
-            placeholder="Write the story behind this memory..."
-            value={message}
-            onClick={(e) => e.stopPropagation()}
-            onChange={(e) => setMessage(e.target.value)}
-            className="w-full h-full resize-none
-                       bg-white/70 rounded-xl p-3
-                       text-black focus:outline-none"
-          />
+          {mode === "edit" ? (
+            <textarea
+              placeholder="Write the story behind this memory..."
+              value={message}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => {
+                const nextValue = e.target.value;
+                setMessage(nextValue);
+                onMessageChange?.(index, nextValue);
+              }}
+              className="w-full h-full resize-none
+                         bg-white/70 rounded-xl p-3
+                         text-black focus:outline-none"
+            />
+          ) : (
+            <p className="w-full h-full bg-white/70 rounded-xl p-3 text-black whitespace-pre-wrap">
+              {message || "No story added yet."}
+            </p>
+          )}
         </div>
       </div>
     </div>
