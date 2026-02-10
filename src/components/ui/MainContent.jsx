@@ -8,6 +8,7 @@ import EatMe from '../games/eatMe/EatMe'
 import Puzzle from '../games/puzzle/Puzzle'
 import Envelope from '../receiver/Intro'
 import PictureMessage from "../receiver/PictureMessage";
+import FinalMessage from "../receiver/FinalMessage";
 
 function MainContent() {
   return (
@@ -17,6 +18,7 @@ function MainContent() {
         <Route path="/" element={<Navigate to="/message1" replace />} />
         <Route path="/envelope" element={<Envelope />} />
         <Route path="/pictureMessage" element={<PictureMessage />} />
+        <Route path="/finalMessage" element={<FinalMessage />} />
         <Route path="/message1" element={<Message1 />} />
         <Route path="/message2" element={<Message2 />} />
         <Route path="/message3" element={<Message3 />} />

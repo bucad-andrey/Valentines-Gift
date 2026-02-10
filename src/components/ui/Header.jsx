@@ -23,6 +23,7 @@ function Header() {
   const tabs = [
     "envelope",
     "pictureMessage",
+    "finalMessage",
     "message1",
     "message2",
     "message3",

@@ -1,6 +1,6 @@
 // constants.js
 export const GAME_CONFIG = {
-  HEARTS_TO_WIN: 15,
+  HEARTS_TO_WIN: 2,
   STARTING_LIVES: 3,
   TIME_LIMIT: 30,
   MAX_ITEMS: 15,

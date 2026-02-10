@@ -4,6 +4,10 @@ import {
   serverTimestamp,
   collection,
   getDocs,
+  addDoc,
+  query,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import { db } from "./firestore";
 
@@ -162,4 +166,111 @@ export const fetchLoveCards = async (userEmail) => {
   });
 
   return cards;
+};
+
+/*
+  Save a "final invitation" into Firestore.
+
+  Path:
+    Senders/{userEmail}/finalMessage/{autoId}
+
+  Stores:
+    - invitationType: string
+    - when: string (datetime-local value)
+    - where: { selectedIndex: number, images: string[] }
+    - dressCode: string
+    - soundtrackUrl: string
+    - message: string
+    - createdAt: Firestore serverTimestamp
+*/
+export const saveFinalMessage = async ({
+  userEmail,
+  invitationType,
+  when,
+  whereImageFiles = [],
+  selectedWhereIndex = null,
+  dressCode = "",
+  soundtrackUrl = "",
+  message = "",
+}) => {
+  if (!userEmail) throw new Error("Missing userEmail");
+
+  // Upload all provided images (keep array positions stable)
+  const uploadedWhereImages = await Promise.all(
+    whereImageFiles.map(async (file) => {
+      if (!file) return null;
+      return await uploadImageToCloudinary(file);
+    })
+  );
+
+  const colRef = collection(db, "Senders", userEmail, "finalMessage");
+
+  const payload = {
+    invitationType: invitationType || "",
+    when: when || "",
+    where: {
+      selectedIndex:
+        typeof selectedWhereIndex === "number" ? selectedWhereIndex : null,
+      images: uploadedWhereImages,
+    },
+    dressCode: dressCode || "",
+    soundtrackUrl: soundtrackUrl || "",
+    message: message || "",
+    createdAt: serverTimestamp(),
+  };
+
+  const docRef = await addDoc(colRef, payload);
+  return { id: docRef.id, ...payload };
+};
+
+/*
+  Fetch the latest "final invitation" doc for a user.
+*/
+export const fetchLatestFinalMessage = async (userEmail) => {
+  const colRef = collection(db, "Senders", userEmail, "finalMessage");
+  const q = query(colRef, orderBy("createdAt", "desc"), limit(1));
+  const snap = await getDocs(q);
+
+  if (snap.empty) return null;
+
+  const docSnap = snap.docs[0];
+  return { id: docSnap.id, ...docSnap.data() };
+};
+
+/*
+  Save receiver's response to a final invitation.
+
+  Path:
+    Senders/{userEmail}/finalMessage/{invitationId}
+
+  Stores (merged onto the invitation doc):
+    receiverResponse: {
+      attending: boolean,
+      message: string,
+      createdAt: serverTimestamp()
+    }
+*/
+export const saveFinalResponse = async ({
+  userEmail,
+  invitationId,
+  attending,
+  message,
+}) => {
+  if (!userEmail || !invitationId) {
+    throw new Error("Missing userEmail or invitationId");
+  }
+
+  const docRef = doc(db, "Senders", userEmail, "finalMessage", "recieverResponse");
+
+  await setDoc(
+    docRef,
+    {
+      receiverResponse: {
+        attending: !!attending,
+        message: message || "",
+        createdAt: serverTimestamp(),
+      },
+    },
+    { merge: true }
+  );
 };

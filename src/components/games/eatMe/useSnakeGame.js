@@ -31,19 +31,23 @@ export function useSnakeGame() {
 
   // Change direction safely
   const changeDirection = (newDir) => {
-    if (OPPOSITE[newDir] === direction) return;
-    setDirection(newDir);
+    setDirection((prev) => {
+      if (OPPOSITE[newDir] === prev) return prev;
+      return newDir;
+    });
   };
 
-  // Generate random food position not inside snake
-  const generateFood = () => {
+  // Generate random food position not inside provided snake
+  const generateFood = (snakeArr) => {
     let newFood;
     do {
       newFood = {
         x: Math.floor(Math.random() * GAME_CONFIG.GRID_SIZE),
         y: Math.floor(Math.random() * GAME_CONFIG.GRID_SIZE),
       };
-    } while (snake.some((part) => part.x === newFood.x && part.y === newFood.y));
+    } while (
+      (snakeArr || []).some((part) => part.x === newFood.x && part.y === newFood.y)
+    );
     setFood(newFood);
   };
 
@@ -76,7 +80,7 @@ export function useSnakeGame() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [direction]);
+  }, []);
   
 
   // Game loop
@@ -117,7 +121,7 @@ export function useSnakeGame() {
           clearInterval(intervalRef.current);
           setStatus("WALL");
           return prevSnake;
-        }s
+        }
         
 
         // Check self collision
@@ -131,14 +135,17 @@ export function useSnakeGame() {
 
         // Check if food eaten
         if (newHead.x === food.x && newHead.y === food.y) {
-          setScore((prev) => prev + 1);
-
-          if (score + 1 >= GAME_CONFIG.WIN_SCORE) {
-            clearInterval(intervalRef.current);
-            setStatus("WIN");
-          } else {
-            generateFood();
-          }
+          setScore((prev) => {
+            const next = prev + 1;
+            if (next >= GAME_CONFIG.WIN_SCORE) {
+              clearInterval(intervalRef.current);
+              setStatus("WIN");
+            } else {
+              // Generate food that won't spawn inside the grown snake
+              generateFood(newSnake);
+            }
+            return next;
+          });
         } else {
           // Remove tail if food not eaten
           newSnake.pop();
@@ -149,7 +156,7 @@ export function useSnakeGame() {
     }, GAME_CONFIG.SPEED);
 
     return () => clearInterval(intervalRef.current);
-  }, [direction, status, food, score, snake]);
+  }, [direction, status, food]);
 
   useEffect(() => {
     window.onerror = (message, source, lineno, colno, error) => {
