@@ -70,43 +70,56 @@ export function usePuzzleGame({
   function grabPiece(e, id) {
     const piece = pieces.find((p) => p.id === id);
     if (!piece || piece.isPlaced || isCompleted) return;
-  
-    const rect = e.currentTarget.getBoundingClientRect();
+
+    // Calculate the piece's position relative to its offset parent so that
+    // switching to absolute positioning does not cause it to "jump" to 0,0.
+    const pieceRect = e.currentTarget.getBoundingClientRect();
     const parentRect = e.currentTarget.offsetParent.getBoundingClientRect();
-  
+    const startX = pieceRect.left - parentRect.left;
+    const startY = pieceRect.top - parentRect.top;
+
     setPieces((prev) =>
       prev.map((p) =>
         p.id === id
           ? {
               ...p,
               isDragging: true,
-              homeX: p.x,
-              homeY: p.y,
+              // Store the home position where the piece started this drag
+              homeX: startX,
+              homeY: startY,
+              // Set initial absolute position to match the visual position
+              x: startX,
+              y: startY,
             }
           : p
       )
     );
-  
+
     setActivePieceId(id);
     setPointerOffset({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      // Pointer offset within the piece box
+      x: e.clientX - pieceRect.left,
+      y: e.clientY - pieceRect.top,
     });
-  
+
     e.currentTarget.setPointerCapture(e.pointerId);
   }
-  
+
 
   function movePiece(e) {
     if (activePieceId === null || isCompleted) return;
+
+    // We position pieces relative to their offset parent (the puzzle area),
+    // so we need to convert the global pointer coordinates into that space.
+    const parentRect = e.currentTarget.getBoundingClientRect();
 
     setPieces((prev) =>
       prev.map((p) =>
         p.id === activePieceId
           ? {
               ...p,
-              x: e.clientX - pointerOffset.x,
-              y: e.clientY - pointerOffset.y,
+              x: e.clientX - parentRect.left - pointerOffset.x,
+              y: e.clientY - parentRect.top - pointerOffset.y,
             }
           : p
       )
@@ -115,13 +128,13 @@ export function usePuzzleGame({
 
   function releasePiece() {
     if (activePieceId === null || isCompleted) return;
-  
+
     let snapped = false;
-  
+
     setPieces((prev) =>
       prev.map((p) => {
         if (p.id !== activePieceId) return p;
-  
+
         if (canSnap(p)) {
           snapped = true;
           setShowHint(false); // 👈 auto-hide hint
@@ -133,8 +146,7 @@ export function usePuzzleGame({
             isDragging: false,
           };
         }
-        
-  
+
         // ❗ Snap back to tray
         return {
           ...p,
@@ -144,14 +156,13 @@ export function usePuzzleGame({
         };
       })
     );
-  
+
     if (!snapped) {
       setMistakes((m) => m + 1);
     }
-  
+
     setActivePieceId(null);
   }
-  
 
   return {
     pieces,
@@ -165,5 +176,4 @@ export function usePuzzleGame({
     releasePiece,
     canSnap,
   };
-  
 }

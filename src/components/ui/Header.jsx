@@ -22,6 +22,8 @@ function Header() {
 
   const tabs = [
     "envelope",
+    "pictureMessage",
+    "finalMessage",
     "message1",
     "message2",
     "message3",
@@ -105,8 +107,7 @@ function Header() {
       {/* =========================
          MOBILE OVERLAY
       ========================== */}
-      <div
-        onClick={() => setDrawerOpen(false)}
+      <div onClick={() => setDrawerOpen(false)}
         className={`
           fixed inset-0 bg-black/40 z-40 transition-opacity
           ${drawerOpen ? "opacity-100" : "opacity-0 pointer-events-none"}

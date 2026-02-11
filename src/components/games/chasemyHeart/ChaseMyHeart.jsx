@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { GAME_CONFIG, MESSAGES } from "./constants";
 import FloatingItem from "./FloatingItem";
 
@@ -106,6 +107,7 @@ case "CLEAR_ITEMS":
 
 function ChaseMyHeart() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
+  const navigate = useNavigate();
 
   // Game timer
   useEffect(() => {
@@ -173,10 +175,20 @@ function ChaseMyHeart() {
         <div className="text-center text-black">
           <p className="text-xl mb-4">{state.message}</p>
           <button
-            onClick={() => dispatch({ type: "START_GAME" })}
+            onClick={() => {
+              if (state.status === "won") {
+                navigate("/finalMessage");
+              } else {
+                dispatch({ type: "START_GAME" });
+              }
+            }}
             className="px-6 py-3 rounded-xl bg-pink-500 text-white hover:bg-pink-600 transition"
           >
-            {state.status === "idle" ? "Start" : "Play Again"}
+            {state.status === "idle"
+              ? "Start"
+              : state.status === "won"
+              ? "Continue"
+              : "Play Again"}
           </button>
         </div>
       )}
