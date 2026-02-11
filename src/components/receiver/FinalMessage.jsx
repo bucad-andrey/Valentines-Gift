@@ -127,7 +127,6 @@ function FinalMessage() {
     try {
       await saveFinalResponse({
         userEmail: auth.currentUser.email,
-        invitationId: data,
         attending: choice === "yes",
         message: trimmed,
       });

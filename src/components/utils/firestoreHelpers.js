@@ -8,6 +8,7 @@ import {
   query,
   orderBy,
   limit,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "./firestore";
 
@@ -172,7 +173,7 @@ export const fetchLoveCards = async (userEmail) => {
   Save a "final invitation" into Firestore.
 
   Path:
-    Senders/{userEmail}/finalMessage/{autoId}
+    Senders/{userEmail}/finalMessage/senderInvitation
 
   Stores:
     - invitationType: string
@@ -203,7 +204,15 @@ export const saveFinalMessage = async ({
     })
   );
 
-  const colRef = collection(db, "Senders", userEmail, "finalMessage");
+  // Single document at:
+  //   Senders/{userEmail}/finalMessage/senderInvitation
+  const docRef = doc(
+    db,
+    "Senders",
+    userEmail,
+    "finalMessage",
+    "senderInvitation"
+  );
 
   const payload = {
     invitationType: invitationType || "",
@@ -219,29 +228,38 @@ export const saveFinalMessage = async ({
     createdAt: serverTimestamp(),
   };
 
-  const docRef = await addDoc(colRef, payload);
+  await setDoc(docRef, payload, { merge: true });
   return { id: docRef.id, ...payload };
 };
 
 /*
   Fetch the latest "final invitation" doc for a user.
+
+  Path:
+    Senders/{userEmail}/finalMessage/senderInvitation
 */
 export const fetchLatestFinalMessage = async (userEmail) => {
-  const colRef = collection(db, "Senders", userEmail, "finalMessage");
-  const q = query(colRef, orderBy("createdAt", "desc"), limit(1));
-  const snap = await getDocs(q);
+  if (!userEmail) throw new Error("Missing userEmail");
 
-  if (snap.empty) return null;
+  const docRef = doc(
+    db,
+    "Senders",
+    userEmail,
+    "finalMessage",
+    "senderInvitation"
+  );
+  const snap = await getDoc(docRef);
 
-  const docSnap = snap.docs[0];
-  return { id: docSnap.id, ...docSnap.data() };
+  if (!snap.exists()) return null;
+
+  return { id: snap.id, ...snap.data() };
 };
 
 /*
   Save receiver's response to a final invitation.
 
   Path:
-    Senders/{userEmail}/finalMessage/{invitationId}
+    Senders/{userEmail}/finalMessage/senderInvitation
 
   Stores (merged onto the invitation doc):
     receiverResponse: {
@@ -252,12 +270,11 @@ export const fetchLatestFinalMessage = async (userEmail) => {
 */
 export const saveFinalResponse = async ({
   userEmail,
-  invitationId,
   attending,
   message,
 }) => {
-  if (!userEmail || !invitationId) {
-    throw new Error("Missing userEmail or invitationId");
+  if (!userEmail) {
+    throw new Error("Missing userEmail");
   }
 
   const docRef = doc(db, "Senders", userEmail, "finalMessage", "recieverResponse");
