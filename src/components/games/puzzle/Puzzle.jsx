@@ -14,7 +14,7 @@ function Puzzle({ onComplete }) {
     pieceSize: 100,
     snapDistance: 300,
     maxMistakes: 50,
-    imageUrl: "https://picsum.photos/600/400",
+    imageUrl: "https://res.cloudinary.com/dv6u2c0hm/image/upload/v1771011435/j7vhsbzmxvq9imfabt2p.jpg",
   };
 
   const game = usePuzzleGame(CONFIG);
