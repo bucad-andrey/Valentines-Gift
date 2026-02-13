@@ -1,20 +1,16 @@
-import React from "react";
-import CreateForm from "./components/sender/CreateForm";
-import EventForm from "./components/sender/EventForm";
-import { useAuth } from "./components/hooks/userAuth";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReceiverPage from "./components/receiver/RecieverUI";
+import SenderFlow from "./components/sender/SenderFlow";
 
 function App() {
-  const { user, loading } = useAuth();
-
-  if (loading) return <div className="text-white text-2xl font-bold flex items-center justify-center min-h-screen">Loading...</div>;
-
-  return user ? <EventForm /> : <CreateForm />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SenderFlow />} />
+        <Route path="/love/:giftId" element={<ReceiverPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
-
-
-
-
-

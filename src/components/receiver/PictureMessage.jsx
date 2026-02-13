@@ -103,7 +103,7 @@ function PictureMessage() {
         {allClicked && (
           <div className="mt-8 flex justify-center">
             <button
-              onClick={() => navigate("/game2")}
+              onClick={() => navigate("/game3")}
               className="px-8 py-4 rounded-xl bg-primary text-white hover:bg-primary-hover transition font-semibold text-lg shadow-lg"
             >
               Continue

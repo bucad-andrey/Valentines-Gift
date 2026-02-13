@@ -13,8 +13,9 @@
     "@cloudinary/react": "^1.14.3",
     "@cloudinary/url-gen": "^1.22.0",
     "@tailwindcss/vite": "^4.1.17",
-    "firebase": "^9.23.0",
+    "firebase": "^12.9.0",
     "framer-motion": "^12.23.25",
+    "nanoid": "^5.1.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.10.0"

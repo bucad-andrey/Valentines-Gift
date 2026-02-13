@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "../ui/Header";
-import MainContent from "../ui/MainContent";
+import MainContent from "../receiver/RecieverUI";
 
 function EventForm() {
   return (
     <BrowserRouter>
-      <Header />
+      {/* <Header /> */}
       <MainContent />
     </BrowserRouter>
   );

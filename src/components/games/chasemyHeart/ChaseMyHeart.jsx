@@ -162,7 +162,7 @@ function ChaseMyHeart() {
   
 
   return (
-    <div className="relative min-h-screen bg-pink-100 flex flex-col items-center justify-center overflow-hidden">
+    <div className="w-full relative min-h-screen bg-pink-100 flex flex-col items-center justify-center overflow-hidden">
       {/* HUD */}
       <div className="flex gap-6 text-lg font-semibold mb-4 text-black absolute top-0">
         <span>❤️ {state.score}/{GAME_CONFIG.HEARTS_TO_WIN}</span>
@@ -177,7 +177,7 @@ function ChaseMyHeart() {
           <button
             onClick={() => {
               if (state.status === "won") {
-                navigate("/finalMessage");
+                navigate("/introduction");
               } else {
                 dispatch({ type: "START_GAME" });
               }
