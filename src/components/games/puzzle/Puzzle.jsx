@@ -14,7 +14,7 @@ function Puzzle({ onComplete }) {
     pieceSize: 100,
     snapDistance: 300,
     maxMistakes: 50,
-    imageUrl: "https://res.cloudinary.com/dv6u2c0hm/image/upload/v1771011435/j7vhsbzmxvq9imfabt2p.jpg",
+    imageUrl: "https://res.cloudinary.com/dv6u2c0hm/image/upload/v1771022989/download_qqz9kz.jpg",
   };
 
   const game = usePuzzleGame(CONFIG);
