@@ -5,20 +5,11 @@ import { useAuth } from "./components/hooks/userAuth";
 
 
 function App() {
-  
+  const { user, loading } = useAuth();
 
- 
+  if (loading) return <div className="text-white text-2xl font-bold flex items-center justify-center min-h-screen">Loading...</div>;
 
-  return <EventForm /> ;
+  return user ? <EventForm /> : <CreateForm />;
 }
 
-<<<<<<< HEAD
 export default App;
-
-
-
-
-
-=======
-export default App;
->>>>>>> vercel-testing
