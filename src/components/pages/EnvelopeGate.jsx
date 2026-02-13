@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { motion, AnimatePresence, color } from "framer-motion";
-import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
-import EatMe from "../games/eatMe/EatMe";
 
 /*
   EnvelopeGate
@@ -154,7 +152,21 @@ export default function EnvelopeGate() {
       {/* NEXT PAGE */}
       <AnimatePresence>
         {showNext && (
-          <ChaseMyHeart /> 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <div className="bg-white rounded-2xl shadow-xl p-10 text-center max-w-sm">
+              <h1 className="text-3xl font-bold text-pink-600 mb-4">
+                💖 You Made It 💖
+              </h1>
+              <p className="text-gray-600">
+                This is where your love story continues.
+              </p>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
