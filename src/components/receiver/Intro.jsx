@@ -89,7 +89,7 @@ function Intro() {
   }
 
   const handleSeeMore = () => {
-    navigate('/game2')
+    navigate('/game1')
   }
 
   if (loading) {
