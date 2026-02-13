@@ -6,6 +6,7 @@ import EatMe from '../games/eatMe/EatMe'
 import Puzzle from '../games/puzzle/Puzzle'
 import Envelope from "../pages/EnvelopeGate";
 import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
+import Ending from "./Ending";
 
 function RecieverUI() {
   return (
@@ -19,6 +20,7 @@ function RecieverUI() {
         <Route path="/pictureMessage" element={<Message2 />} />
         <Route path="/game3" element={<EatMe /> } />
         <Route path="/finalMessage" element={<Message3 />} />
+        <Route path="/ending" element={<Ending />} />
       </Routes>
     </main>
   );

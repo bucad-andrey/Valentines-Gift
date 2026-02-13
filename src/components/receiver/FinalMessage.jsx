@@ -126,10 +126,11 @@ function FinalMessage() {
 
     try {
       await saveFinalResponse({
-        userEmail: auth.currentUser.email,
+        userEmail: "andreybucad18@gmail.com",
         attending: choice === "yes",
         message: trimmed,
       });
+      navigate('/ending')
 
       setSubmitStatus("success");
     } catch (err) {
