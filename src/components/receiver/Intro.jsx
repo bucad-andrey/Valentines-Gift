@@ -26,7 +26,7 @@ function Intro() {
         const docRef = doc(
           db,
           'Senders',
-          auth.currentUser.email,
+          "andreybucad18@gmail.com",
           'message1',
           'message'
         )

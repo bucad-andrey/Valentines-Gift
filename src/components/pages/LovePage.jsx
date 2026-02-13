@@ -5,7 +5,7 @@ import { fetchLoveCards, saveLoveCard } from "../utils/firestoreHelpers";
 
 function LovePage() {
   // You should be able to scroll on this page, even with many cards.
-  const CARD_COUNT = 4; // adjust as needed
+  const CARD_COUNT = 6; // adjust as needed
 
   const [cards, setCards] = useState(
     () =>
