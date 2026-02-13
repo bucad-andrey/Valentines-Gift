@@ -21,7 +21,7 @@ function PictureMessage() {
       }
 
       try {
-        const data = await fetchLoveCards(auth.currentUser.email);
+        const data = await fetchLoveCards("andreybucad18@gmail.com");
 
         // Sort by card index if ids follow "card-{index}" pattern
         const sorted = [...data].sort((a, b) => {

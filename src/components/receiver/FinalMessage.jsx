@@ -69,7 +69,7 @@ function FinalMessage() {
       }
 
       try {
-        const latest = await fetchLatestFinalMessage(auth.currentUser.email);
+        const latest = await fetchLatestFinalMessage("andreybucad18@gmail.com");
         if (!latest) {
           setError("No invitation found yet. Create one first.");
         } else {
