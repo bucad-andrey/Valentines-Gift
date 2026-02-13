@@ -84,7 +84,7 @@ function PictureMessage() {
     <section className="bg-gradient-to-br from-primary-soft to-secondary-soft p-6 min-h-screen">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-2xl font-semibold text-primary-text mb-6">
-          Our picture memories
+          Click the pictures
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
