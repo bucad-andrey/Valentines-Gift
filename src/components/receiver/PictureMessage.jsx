@@ -14,11 +14,7 @@ function PictureMessage() {
 
   useEffect(() => {
     const loadCards = async () => {
-      if (!auth.currentUser?.email) {
-        setError("No user logged in");
-        setLoading(false);
-        return;
-      }
+      
 
       try {
         const data = await fetchLoveCards("andreybucad18@gmail.com");

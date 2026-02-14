@@ -16,11 +16,7 @@ function Intro() {
 
   useEffect(() => {
     const fetchMessage = async () => {
-      if (!auth.currentUser?.email) {
-        setError('No user logged in')
-        setLoading(false)
-        return
-      }
+      setLoading(false)
 
       try {
         const docRef = doc(

@@ -62,11 +62,7 @@ function FinalMessage() {
 
   useEffect(() => {
     const load = async () => {
-      if (!auth.currentUser?.email) {
-        setError("No user logged in");
-        setLoading(false);
-        return;
-      }
+      
 
       try {
         const latest = await fetchLatestFinalMessage("andreybucad18@gmail.com");
