@@ -10,7 +10,7 @@ function Puzzle({ onComplete }) {
 
   const CONFIG = {
     cols: 3,
-    rows: 2,
+    rows: 3,
     pieceSize: 100,
     snapDistance: 300,
     maxMistakes: 50,
