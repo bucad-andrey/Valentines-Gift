@@ -22,6 +22,7 @@ function Header() {
 
   const tabs = [
     "envelope",
+    "introduction",
     "pictureMessage",
     "finalMessage",
     "message1",
@@ -30,7 +31,6 @@ function Header() {
     "game1",
     "game2",
     "game3",
-    "preview",
   ];
 
   /* =========================

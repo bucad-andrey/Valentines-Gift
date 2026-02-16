@@ -6,7 +6,8 @@ import Preview from "../games/puzzle/Puzzle";
 import ChaseMe from '../games/chasemyHeart/ChaseMyHeart'
 import EatMe from '../games/eatMe/EatMe'
 import Puzzle from '../games/puzzle/Puzzle'
-import Envelope from '../receiver/Intro'
+import Envelope from '../pages/EnvelopeGate'
+import Introduction from '../receiver/Intro'
 import PictureMessage from "../receiver/PictureMessage";
 import FinalMessage from "../receiver/FinalMessage";
 
@@ -17,6 +18,7 @@ function MainContent() {
       <Routes>
         <Route path="/" element={<Navigate to="/message1" replace />} />
         <Route path="/envelope" element={<Envelope />} />
+        <Route path="/introduction" element={<Introduction />} />
         <Route path="/pictureMessage" element={<PictureMessage />} />
         <Route path="/finalMessage" element={<FinalMessage />} />
         <Route path="/message1" element={<Message1 />} />

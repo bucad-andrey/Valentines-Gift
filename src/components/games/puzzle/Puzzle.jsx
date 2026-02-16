@@ -3,21 +3,12 @@ import PuzzleBoard from "./PuzzleBoard";
 import PuzzlePiece from "./PuzzlePiece";
 import { usePuzzleGame } from "./usePuzzleGame";
 import PuzzleTray from "./PuzzleTray";
-
+import { PUZZLE_CONFIG } from './puzzleConfig'
 
 function Puzzle({ onComplete }) {
   const navigate = useNavigate();
 
-  const CONFIG = {
-    cols: 3,
-    rows: 3,
-    pieceSize: 100,
-    snapDistance: 300,
-    maxMistakes: 50,
-    imageUrl: "https://res.cloudinary.com/dv6u2c0hm/image/upload/v1771022989/download_qqz9kz.jpg",
-  };
-
-  const game = usePuzzleGame(CONFIG);
+  const game = usePuzzleGame(PUZZLE_CONFIG);
 
   const handleContinue = () => {
     if (onComplete) {
@@ -35,8 +26,8 @@ function Puzzle({ onComplete }) {
       <div
         className="relative"
         style={{
-          width: CONFIG.cols * CONFIG.pieceSize + 40,
-          height: CONFIG.rows * CONFIG.pieceSize + 220,
+          width: PUZZLE_CONFIG.cols * PUZZLE_CONFIG.pieceSize + 40,
+          height: PUZZLE_CONFIG.rows * PUZZLE_CONFIG.pieceSize + 220,
         }}
         onPointerMove={game.movePiece}
         onPointerUp={game.releasePiece}
@@ -44,16 +35,16 @@ function Puzzle({ onComplete }) {
       >
         {!game.isCompleted && (
           <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-pink-600 font-semibold">
-            Mistakes: {game.mistakes} / {CONFIG.maxMistakes}
+            Mistakes: {game.mistakes} / {PUZZLE_CONFIG.maxMistakes}
           </div>
         )}
 
 <PuzzleBoard
-  cols={CONFIG.cols}
-  rows={CONFIG.rows}
-  pieceSize={CONFIG.pieceSize}
+  cols={PUZZLE_CONFIG.cols}
+  rows={PUZZLE_CONFIG.rows}
+  pieceSize={PUZZLE_CONFIG.pieceSize}
   pieces={game.pieces}
-  imageUrl={CONFIG.imageUrl}
+  imageUrl={PUZZLE_CONFIG.imageUrl}
   showHint={game.showHint}
 />
 <button
@@ -72,9 +63,9 @@ function Puzzle({ onComplete }) {
       <PuzzlePiece
         key={piece.id}
         piece={piece}
-        pieceSize={CONFIG.pieceSize}
-        imageUrl={CONFIG.imageUrl}
-        cols={CONFIG.cols}
+        pieceSize={PUZZLE_CONFIG.pieceSize}
+        imageUrl={PUZZLE_CONFIG.imageUrl}
+        cols={PUZZLE_CONFIG.cols}
         canSnap={game.canSnap(piece)}
         onPointerDown={(e) => game.grabPiece(e, piece.id)}
       />
@@ -87,9 +78,9 @@ function Puzzle({ onComplete }) {
     <PuzzlePiece
       key={piece.id}
       piece={piece}
-      pieceSize={CONFIG.pieceSize}
-      imageUrl={CONFIG.imageUrl}
-      cols={CONFIG.cols}
+      pieceSize={PUZZLE_CONFIG.pieceSize}
+      imageUrl={PUZZLE_CONFIG.imageUrl}
+      cols={PUZZLE_CONFIG.cols}
       canSnap={game.canSnap(piece)}
       onPointerDown={(e) => game.grabPiece(e, piece.id)}
     />
