@@ -21,10 +21,10 @@ function LovePage() {
   // Load any existing cards for this user
   useEffect(() => {
     const loadExistingCards = async () => {
-      if (!auth.currentUser?.email) return;
+      if (!auth.currentUser?.uid) return;
 
       try {
-        const existing = await fetchLoveCards(auth.currentUser.email);
+        const existing = await fetchLoveCards(auth.currentUser.uid);
 
         setCards((prev) => {
           const next = [...prev];
@@ -75,7 +75,7 @@ function LovePage() {
   };
 
   const handleSaveAll = async () => {
-    if (!auth.currentUser?.email) return;
+    if (!auth.currentUser?.uid) return;
 
     setIsSaving(true);
     setSaveStatus(null);
@@ -93,7 +93,7 @@ function LovePage() {
           }
 
           return saveLoveCard({
-            userEmail: auth.currentUser.email,
+            userEmail: auth.currentUser.uid,
             cardId: `card-${index}`,
             message: card.message || "",
             imageFile: card.imageFile,

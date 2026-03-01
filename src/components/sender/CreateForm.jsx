@@ -3,6 +3,7 @@ import { db, auth, googleProvider } from "../utils/firestore";
 import { setDoc, doc } from "firebase/firestore";
 import { signInWithPopup, signOut } from "firebase/auth";
 import "./romantic.css";
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function CreateForm() {
   const [email, setEmail] = useState("");
@@ -10,7 +11,7 @@ function CreateForm() {
 
   const createSenderDocument = async (user) => {
     try {
-      await setDoc(doc(db, "Senders", user.email), {
+      await setDoc(doc(db, "Senders", user.uid), {
         email: user.email,
         name: user.displayName || name || "",
         createdAt: Date.now(),
@@ -43,7 +44,7 @@ function CreateForm() {
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-red-500 to-pink-600 overflow-hidden">
-
+      <SpeedInsights/>
       {/* Floating heart particles */}
       {Array.from({ length: 20 }).map((_, i) => (
         <div

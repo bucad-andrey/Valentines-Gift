@@ -47,7 +47,7 @@ function IntroPage() {
 
     try {
       await saveMessageWithImage({
-        userEmail: auth.currentUser.email,
+        userEmail: auth.currentUser.uid,
         message,
         imageFile,
       });

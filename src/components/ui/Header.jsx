@@ -28,9 +28,7 @@ function Header() {
     "message1",
     "message2",
     "message3",
-    "game1",
-    "game2",
-    "game3",
+    "preview"
   ];
 
   /* =========================

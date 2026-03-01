@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "../ui/ImageUploader";
 import { auth } from "../utils/firestore";
 import { saveFinalMessage } from "../utils/firestoreHelpers";
+import {setLocalData} from '../hooks/saveToLocalStorage'
+import { useTime } from "framer-motion";
 
 //This will be about the theme song or record message of the Sender
 //It will have a more message but more about the experience of being together and how much the Sender willing to persue the future with the Reciever
@@ -24,7 +26,7 @@ function SharePage() {
   const [message, setMessage] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState(null); // "success" | "error" | null
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const finalInvitationType = useMemo(() => {
     const raw =
@@ -38,7 +40,7 @@ function SharePage() {
       : null;
 
   const handleSubmit = async () => {
-    if (!auth.currentUser?.email) return;
+    if (!auth.currentUser?.uid) return;
 
     setErrorMessage("");
     setSaveStatus(null);
@@ -72,7 +74,7 @@ function SharePage() {
 
     try {
       await saveFinalMessage({
-        userEmail: auth.currentUser.email,
+        userEmail: auth.currentUser.uid,
         invitationType: finalInvitationType,
         when,
         whereImageFiles,
@@ -91,6 +93,7 @@ function SharePage() {
       setIsSaving(false);
     }
   };
+
 
   return (
     <section className="bg-linear-to-br from-primary-soft to-secondary-soft px-4 sm:px-6 py-8 text-primary-text min-h-screen">
