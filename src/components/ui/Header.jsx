@@ -21,10 +21,6 @@ function Header() {
   ========================== */
 
   const tabs = [
-    "envelope",
-    "introduction",
-    "pictureMessage",
-    "finalMessage",
     "message1",
     "message2",
     "message3",

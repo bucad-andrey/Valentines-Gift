@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateForm from "./components/sender/CreateForm";
 import EventForm from "./components/sender/EventForm";
 import ReceiverUI from "./components/receiver/RecieverUI";
@@ -17,12 +17,17 @@ function App() {
 
   return (
     <BrowserRouter>
+
+      {/* DEBUG LOGGING */}
+      {console.log("PATH:", window.location.pathname)}
+      {console.log("USER:", user?.email)}
+
       <Routes>
 
-        {/* Receiver Route */}
+        {/* ================= PUBLIC RECEIVER ROUTE ================= */}
         <Route path="/love/:giftId/*" element={<ReceiverUI />} />
 
-        {/* Sender Routes */}
+        {/* ================= PRIVATE SENDER ROUTES ================= */}
         <Route
           path="/*"
           element={user ? <EventForm /> : <CreateForm />}

@@ -1,27 +1,37 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Message1 from "../receiver/Intro";
-import Message2 from "../receiver/PictureMessage";
-import Message3 from "../receiver/FinalMessage";
-import EatMe from '../games/eatMe/EatMe'
-import Puzzle from '../games/puzzle/Puzzle'
-import Envelope from "../pages/EnvelopeGate";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import Intro from "../receiver/Intro";
+import PictureMessage from "../receiver/PictureMessage";
+import FinalMessage from "../receiver/FinalMessage";
+import EatMe from "../games/eatMe/EatMe";
+import Puzzle from "../games/puzzle/Puzzle";
 import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
+import Envelope from "../pages/EnvelopeGate";
 import Ending from "./Ending";
 
 function RecieverUI() {
+  const { giftId } = useParams();
+
+  console.log("🎁 Receiver giftId:", giftId);
+
   return (
-    <main>
+    <main className="pt-20 px-6">
+
       <Routes>
-        <Route path="/" element={<Navigate to="/envelope" replace />} />
-        <Route path="/envelope" element={<Envelope />} />
+        {/* Default entry */}
+        <Route path="/" element={<Envelope />} />
+
+        <Route path="/introduction" element={<Intro />} />
         <Route path="/game1" element={<ChaseMyHeart />} />
-        <Route path="/introduction" element={<Message1 />} />
-        <Route path="/game2" element={<Puzzle /> } />
-        <Route path="/pictureMessage" element={<Message2 />} />
-        <Route path="/game3" element={<EatMe /> } />
-        <Route path="/finalMessage" element={<Message3 />} />
+        <Route path="/game2" element={<Puzzle />} />
+        <Route path="/game3" element={<EatMe />} />
+        <Route path="/pictureMessage" element={<PictureMessage />} />
+        <Route path="/finalMessage" element={<FinalMessage />} />
         <Route path="/ending" element={<Ending />} />
+
+        {/* Safety fallback */}
+        <Route path="*" element={<Navigate to="." replace />} />
       </Routes>
+
     </main>
   );
 }
