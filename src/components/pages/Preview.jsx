@@ -23,9 +23,9 @@ function Preview() {
         Generate Url
       </button>
 
-      <p>
+      <a href={generatedUrl} target='_blank'>
         {generatedUrl}
-      </p>
+      </a>
     </section>
   )
 }
