@@ -130,7 +130,7 @@ function FinalMessage() {
         attending: choice === "yes",
         message: trimmed,
       });
-      navigate('/ending')
+      navigate('../ending')
 
       setSubmitStatus("success");
     } catch (err) {

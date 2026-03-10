@@ -18,9 +18,7 @@ function App() {
   return (
     <BrowserRouter>
 
-      {/* DEBUG LOGGING */}
-      {console.log("PATH:", window.location.pathname)}
-      {console.log("USER:", user?.email)}
+     
 
       <Routes>
 

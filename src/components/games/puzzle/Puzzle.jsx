@@ -16,7 +16,7 @@ function Puzzle({ onComplete }) {
       return;
     }
 
-    navigate("/pictureMessage");
+    navigate("../pictureMessage");
   };
 
   return (

@@ -20,13 +20,13 @@ function RecieverUI() {
         {/* Default entry */}
         <Route path="/" element={<Envelope />} />
 
-        <Route path="/introduction" element={<Intro />} />
-        <Route path="/game1" element={<ChaseMyHeart />} />
-        <Route path="/game2" element={<Puzzle />} />
-        <Route path="/game3" element={<EatMe />} />
-        <Route path="/pictureMessage" element={<PictureMessage />} />
-        <Route path="/finalMessage" element={<FinalMessage />} />
-        <Route path="/ending" element={<Ending />} />
+        <Route path="game1" element={<ChaseMyHeart />} />
+        <Route path="introduction" element={<Intro userId={giftId}/>} />
+        <Route path="game2" element={<Puzzle />} />
+        <Route path="pictureMessage" element={<PictureMessage userId={giftId}/>} />
+        <Route path="game3" element={<EatMe />} />
+        <Route path="finalMessage" element={<FinalMessage userId={giftId}/>} />
+        <Route path="ending" element={<Ending />} />
 
         {/* Safety fallback */}
         <Route path="*" element={<Navigate to="." replace />} />

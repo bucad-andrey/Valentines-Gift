@@ -19,7 +19,7 @@ export default function EnvelopeGate() {
   const [unlocked, setUnlocked] = useState(false);
   const [showNext, setShowNext] = useState(false);
 
-  const CORRECT_PASSWORD = "iloveyou";
+  const CORRECT_PASSWORD = "i";
 
   /*
     Opens envelope once

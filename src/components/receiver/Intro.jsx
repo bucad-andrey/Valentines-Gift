@@ -3,7 +3,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { db, auth } from '../utils/firestore'
 
-function Intro() {
+function Intro({userId}) {
   const [image, setImage] = useState(null)
   const [value, setValue] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -16,7 +16,7 @@ function Intro() {
 
   useEffect(() => {
     const fetchMessage = async () => {
-      if (!auth.currentUser?.email) {
+      if (!userId) {
         setError('No user logged in')
         setLoading(false)
         return
@@ -26,7 +26,7 @@ function Intro() {
         const docRef = doc(
           db,
           'Senders',
-          auth?.currentUser?.email,
+          userId,
           'message1',
           'message'
         )
@@ -89,7 +89,7 @@ function Intro() {
   }
 
   const handleSeeMore = () => {
-    navigate('/game2')
+    navigate('../game2')
   }
 
   if (loading) {

@@ -48,7 +48,7 @@ function EatMe() {
       if (e.key === "Enter" || e.code === "Space" || e.key === " ") {
         e.preventDefault();
         if (game.status === "WIN") {
-          navigate("/finalMessage");
+          navigate("../finalMessage");
         } else {
           game.resetGame();
         }
@@ -176,7 +176,7 @@ function EatMe() {
                   fontSize: "18px",
                   cursor: "pointer",
                 }}
-                onClick={() => navigate("/finalMessage")}
+                onClick={() => navigate("../finalMessage")}
               >
                 See Final Message
               </button>

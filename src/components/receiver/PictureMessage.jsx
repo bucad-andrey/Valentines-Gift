@@ -4,7 +4,7 @@ import LoveCard from "../ui/LoveCard";
 import { auth } from "../utils/firestore";
 import { fetchLoveCards } from "../utils/firestoreHelpers";
 
-function PictureMessage() {
+function PictureMessage({userId}) {
   const navigate = useNavigate();
 
   const [cards, setCards] = useState([]);
@@ -14,14 +14,14 @@ function PictureMessage() {
 
   useEffect(() => {
     const loadCards = async () => {
-      if (!auth.currentUser?.email) {
+      if (!userId) {
         setError("No user logged in");
         setLoading(false);
         return;
       }
 
       try {
-        const data = await fetchLoveCards(auth?.currentUser?.email);
+        const data = await fetchLoveCards(userId);
 
         // Sort by card index if ids follow "card-{index}" pattern
         const sorted = [...data].sort((a, b) => {
@@ -103,7 +103,7 @@ function PictureMessage() {
         {allClicked && (
           <div className="mt-8 flex justify-center">
             <button
-              onClick={() => navigate("/game3")}
+              onClick={() => navigate("../game3")}
               className="px-8 py-4 rounded-xl bg-primary text-white hover:bg-primary-hover transition font-semibold text-lg shadow-lg"
             >
               Continue

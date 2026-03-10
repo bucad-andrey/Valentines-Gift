@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useParams } from "react";
 import { useNavigate } from "react-router-dom";
 import { GAME_CONFIG, MESSAGES } from "./constants";
 import FloatingItem from "./FloatingItem";
@@ -21,6 +21,8 @@ const bombImages = [
 
 
 function gameReducer(state, action) {
+  
+
     /*
     GAME IDEA : 1ST PAGE
     HEARTS WILL POP UP AND THE RECIEVER SHOULD CLICK THEM
@@ -177,7 +179,10 @@ function ChaseMyHeart() {
           <button
             onClick={() => {
               if (state.status === "won") {
-                navigate("/introduction");
+                navigate("../introduction");
+                console.log("PATH:", window.location.pathname);
+                console.log("USER:", user?.email);
+                console.log("giftId:", giftId);
               } else {
                 dispatch({ type: "START_GAME" });
               }
