@@ -47,9 +47,8 @@ function formatWhen(when) {
   });
 }
 
-function FinalMessage() {
+function FinalMessage({userId}) {
   const navigate = useNavigate();
-
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -62,14 +61,8 @@ function FinalMessage() {
 
   useEffect(() => {
     const load = async () => {
-      if (!auth.currentUser?.email) {
-        setError("No user logged in");
-        setLoading(false);
-        return;
-      }
-
       try {
-        const latest = await fetchLatestFinalMessage(auth?.currentUser?.email);
+        const latest = await fetchLatestFinalMessage(userId);
         if (!latest) {
           setError("No invitation found yet. Create one first.");
         } else {

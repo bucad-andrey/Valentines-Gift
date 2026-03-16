@@ -5,7 +5,7 @@ import FinalMessage from "../receiver/FinalMessage";
 import EatMe from "../games/eatMe/EatMe";
 import Puzzle from "../games/puzzle/Puzzle";
 import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
-import Envelope from "../pages/EnvelopeGate";
+import Envelope from "../sender/EnvelopeGate";
 import Ending from "./Ending";
 
 function RecieverUI() {

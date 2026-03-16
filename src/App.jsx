@@ -17,9 +17,6 @@ function App() {
 
   return (
     <BrowserRouter>
-
-     
-
       <Routes>
 
         {/* ================= PUBLIC RECEIVER ROUTE ================= */}

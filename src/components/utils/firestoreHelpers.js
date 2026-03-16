@@ -189,6 +189,7 @@ export const saveFinalMessage = async ({
   invitationType,
   when,
   whereImageFiles = [],
+  existingWhereImages = [],
   selectedWhereIndex = null,
   dressCode = "",
   soundtrackUrl = "",
@@ -196,10 +197,11 @@ export const saveFinalMessage = async ({
 }) => {
   if (!userEmail) throw new Error("Missing userEmail");
 
-  // Upload all provided images (keep array positions stable)
+  // Upload provided images (keep array positions stable).
+  // If a slot has no new file, preserve existing URL (prevents wiping saved images).
   const uploadedWhereImages = await Promise.all(
-    whereImageFiles.map(async (file) => {
-      if (!file) return null;
+    whereImageFiles.map(async (file, index) => {
+      if (!file) return existingWhereImages?.[index] ?? null;
       return await uploadImageToCloudinary(file);
     })
   );
@@ -238,13 +240,13 @@ export const saveFinalMessage = async ({
   Path:
     Senders/{userEmail}/finalMessage/senderInvitation
 */
-export const fetchLatestFinalMessage = async (userEmail) => {
-  if (!userEmail) throw new Error("Missing userEmail");
+export const fetchLatestFinalMessage = async (userId) => {
+  if (!userId) throw new Error("Missing userEmail");
 
   const docRef = doc(
     db,
     "Senders",
-    userEmail,
+    userId,
     "finalMessage",
     "senderInvitation"
   );

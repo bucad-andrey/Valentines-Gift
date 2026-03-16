@@ -10,6 +10,7 @@ const STORAGE_KEY = "app_data";
 // ----------------------------------
 
 const DRAFT_KEY = "sharePage_draft";
+const INVITE_DRAFT_KEY = "invitePage_draft";
 
 // ------------------------------
 // Load saved draft
@@ -43,6 +44,35 @@ export const clearDraft = () => {
     localStorage.removeItem(DRAFT_KEY);
   } catch (err) {
     console.error("Failed to clear draft:", err);
+  }
+};
+
+// ------------------------------
+// InvitePage draft localStorage Helper
+// ------------------------------
+export const loadInviteDraft = () => {
+  try {
+    const raw = localStorage.getItem(INVITE_DRAFT_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (err) {
+    console.error("Failed to load invite draft:", err);
+    return null;
+  }
+};
+
+export const saveInviteDraft = (data) => {
+  try {
+    localStorage.setItem(INVITE_DRAFT_KEY, JSON.stringify(data));
+  } catch (err) {
+    console.error("Failed to save invite draft:", err);
+  }
+};
+
+export const clearInviteDraft = () => {
+  try {
+    localStorage.removeItem(INVITE_DRAFT_KEY);
+  } catch (err) {
+    console.error("Failed to clear invite draft:", err);
   }
 };
 

@@ -16,12 +16,6 @@ function Intro({userId}) {
 
   useEffect(() => {
     const fetchMessage = async () => {
-      if (!userId) {
-        setError('No user logged in')
-        setLoading(false)
-        return
-      }
-
       try {
         const docRef = doc(
           db,

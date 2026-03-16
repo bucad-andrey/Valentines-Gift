@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Message1 from "../pages/IntroPage";
-import Message2 from "../pages/LovePage";
-import Message3 from "../pages/SharePage";
-import Preview from "../pages/Preview";
+import Message1 from "../sender/IntroPage";
+import Message2 from "../sender/LoveCardPage";
+import Message3 from "../sender/InvitePage";
+import Preview from "../sender/Preview";
 
 function MainContent() {
   return (

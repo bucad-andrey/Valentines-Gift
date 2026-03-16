@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const animations = {
   pop: "animate-[pop_0.3s_ease-out]",
@@ -22,6 +22,11 @@ function ImageUploader({
 }) {
   const inputRef = useRef(null);
   const [preview, setPreview] = useState(initialImage);
+
+  // If parent restores data (e.g., draft/Firestore), reflect it in the preview.
+  useEffect(() => {
+    setPreview(initialImage);
+  }, [initialImage]);
 
   /* ---------- OPEN FILE PICKER ---------- */
   const handleClick = () => {
