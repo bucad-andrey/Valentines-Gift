@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoveCard from "../ui/LoveCard";
+import LoveCard from "../sender/LoveCard";
 import { auth } from "../utils/firestore";
 import { fetchLoveCards } from "../utils/firestoreHelpers";
 

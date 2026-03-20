@@ -50,7 +50,7 @@ function Header() {
     <header
       className={`
         fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${isScrolled ? "backdrop-blur-md bg-white/70 shadow-sm" : "bg-transparent"}
+        ${isScrolled ? "bg-white/70 shadow-sm" : "bg-transparent"}
       `}
     >
       <nav className="flex items-center space-x-5 justify-end-safe px-4 py-3 md:px-8">

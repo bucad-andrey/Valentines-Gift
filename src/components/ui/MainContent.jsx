@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Message1 from "../sender/IntroPage";
 import Message2 from "../sender/LoveCardPage";
 import Message3 from "../sender/InvitePage";
-import Preview from "../sender/Preview";
+import Preview from "../sender/Letter";
 
 function MainContent() {
   return (

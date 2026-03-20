@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LoveCard from "../ui/LoveCard";
+import LoveCard from "./LoveCard";
 import { auth } from "../utils/firestore";
 import { fetchLoveCards, saveLoveCard } from "../utils/firestoreHelpers";
 

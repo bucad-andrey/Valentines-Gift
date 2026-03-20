@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import generateGiftURL from '../url generation/generateGiftURL'
+import generateGiftURL from '../ui/generateGiftURL'
 import { auth } from '../utils/firestore';
 
 function Preview() {
