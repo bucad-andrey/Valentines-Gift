@@ -66,14 +66,7 @@ export const uploadImageToCloudinary = async (file) => {
 export const saveMessageWithImage = async ({
   userEmail,
   message,
-  imageFile = null,
 }) => {
-  let uploadedImageURL = null;
-
-  // Upload only if image exists
-  if (imageFile) {
-    uploadedImageURL = await uploadImageToCloudinary(imageFile);
-  }
 
   const docRef = doc(
     db,
@@ -87,13 +80,12 @@ export const saveMessageWithImage = async ({
     docRef,
     {
       value: message,
-      image: uploadedImageURL,
       updatedAt: serverTimestamp(),
     },
     { merge: true }
   );
 
-  return uploadedImageURL;
+  return message;
 };
 
 /*
@@ -118,7 +110,7 @@ export const saveLoveCard = async ({
   cardId,
   message,
   imageFile = null,
-}) => {
+  }) => {
   let uploadedImageURL = null;
 
   // Upload only if a new image file is provided
@@ -142,15 +134,6 @@ export const saveLoveCard = async ({
   await setDoc(docRef, payload, { merge: true });
 };
 
-/*
-  Fetch all LovePage cards for a user.
-
-  Path:
-    Senders/{userEmail}/loveCards/*
-
-  Returns an array of:
-    { id, value, image }
-*/
 export const fetchLoveCards = async (userEmail) => {
   const colRef = collection(db, "Senders", userEmail, "loveCards");
   const snapshot = await getDocs(colRef);
@@ -169,21 +152,6 @@ export const fetchLoveCards = async (userEmail) => {
   return cards;
 };
 
-/*
-  Save a "final invitation" into Firestore.
-
-  Path:
-    Senders/{userEmail}/finalMessage/senderInvitation
-
-  Stores:
-    - invitationType: string
-    - when: string (datetime-local value)
-    - where: { selectedIndex: number, images: string[] }
-    - dressCode: string
-    - soundtrackUrl: string
-    - message: string
-    - createdAt: Firestore serverTimestamp
-*/
 export const saveFinalMessage = async ({
   userEmail,
   invitationType,
@@ -194,7 +162,7 @@ export const saveFinalMessage = async ({
   dressCode = "",
   soundtrackUrl = "",
   message = "",
-}) => {
+  }) => {
   if (!userEmail) throw new Error("Missing userEmail");
 
   // Upload provided images (keep array positions stable).
@@ -234,12 +202,6 @@ export const saveFinalMessage = async ({
   return { id: docRef.id, ...payload };
 };
 
-/*
-  Fetch the latest "final invitation" doc for a user.
-
-  Path:
-    Senders/{userEmail}/finalMessage/senderInvitation
-*/
 export const fetchLatestFinalMessage = async (userId) => {
   if (!userId) throw new Error("Missing userEmail");
 
@@ -257,19 +219,6 @@ export const fetchLatestFinalMessage = async (userId) => {
   return { id: snap.id, ...snap.data() };
 };
 
-/*
-  Save receiver's response to a final invitation.
-
-  Path:
-    Senders/{userEmail}/finalMessage/senderInvitation
-
-  Stores (merged onto the invitation doc):
-    receiverResponse: {
-      attending: boolean,
-      message: string,
-      createdAt: serverTimestamp()
-    }
-*/
 export const saveFinalResponse = async ({
   userEmail,
   attending,

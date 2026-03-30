@@ -1,9 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { auth } from "../utils/firestore";
 import { saveMessageWithImage } from "../utils/firestoreHelpers";
 
-function Letter() {
+function CopyLetter() {
+
+  /*
+  ============================================
+  STATE MANAGEMENT
+  ============================================
+  */
+
   const [text, setText] = useState(""); // full message
   const [pages, setPages] = useState([]); // split pages
   const [currentPage, setCurrentPage] = useState(0); // page index
@@ -11,20 +18,39 @@ function Letter() {
   const [saveStatus, setSaveStatus] = useState(null);
   const [isViewing, setIsViewing] = useState(false); // edit vs view mode
   const [animatedText, setAnimatedText] = useState(""); // typing animation
-  const typingIntervalRef = useRef(null);
 
 
+  /*
+  ============================================
+  LOAD FROM LOCAL STORAGE
+  ============================================
+  */
 
   useEffect(() => {
     const saved = localStorage.getItem("letterSent");
     if (saved) setText(saved);
   }, []);
 
+
+  /*
+  ============================================
+  SAVE TO LOCAL STORAGE
+  ============================================
+  */
+
   useEffect(() => {
     localStorage.setItem("letterSent", text);
   }, [text]);
 
-  useEffect(() => { 
+
+  /*
+  ============================================
+  SPLIT TEXT INTO PAGES
+  (simulate real letter pages)
+  ============================================
+  */
+
+  useEffect(() => {
     const maxCharsPerPage = 500; // tweak this
     const split = [];
 
@@ -37,63 +63,50 @@ function Letter() {
     console.log("DEBUG: Pages Generated ->", split.length);
   }, [text]);
 
+
   /*
-============================================
-TYPEWRITER EFFECT (VIEW MODE)
-============================================
-*/
-useEffect(() => {
-  if (!isViewing) return;
+  ============================================
+  TYPEWRITER EFFECT (VIEW MODE)
+  ============================================
+  */
 
-  let index = 0;
-  const currentText = pages[currentPage] || "";
+  useEffect(() => {
+    if (!isViewing) return;
 
-  setAnimatedText("");
+    let index = 0;
+    setAnimatedText("");
 
-  if (typingIntervalRef.current) {
-    clearInterval(typingIntervalRef.current);
-  }
+    const currentText = pages[currentPage] || "";
 
-  typingIntervalRef.current = setInterval(() => {
-    index++;
+    const interval = setInterval(() => {
+      setAnimatedText((prev) => prev + currentText[index]);
+      index++;
 
-    // ✅ ALWAYS derive from source string (safe)
-    setAnimatedText(currentText.slice(0, index));
+      if (index >= currentText.length) {
+        clearInterval(interval);
+      }
+    }, 60); // speed of typing
 
-    // DEBUG
-    console.log("DEBUG:", index, currentText.slice(0, index));
+    return () => clearInterval(interval);
+  }, [isViewing, currentPage, pages]);
 
-    if (index >= currentText.length) {
-      clearInterval(typingIntervalRef.current);
-    }
-  }, 60);
 
-  return () => {
-    if (typingIntervalRef.current) {
-      clearInterval(typingIntervalRef.current);
-    }
-  };
-}, [isViewing, currentPage, pages]);
-
-const handleSkip = () => {
-  if (!isViewing) return;
-
-  const currentText = pages[currentPage] || "";
-
-  // stop animation
-  if (typingIntervalRef.current) {
-    clearInterval(typingIntervalRef.current);
-  }
-
-  // instantly show full text
-  setAnimatedText(currentText);
-
-  console.log("DEBUG: Animation skipped");
-};
+  /*
+  ============================================
+  HANDLE INPUT CHANGE
+  ============================================
+  */
 
   const handleMessageChange = (e) => {
     setText(e.target.value);
   };
+
+
+  /*
+  ============================================
+  SAVE TO FIRESTORE
+  ============================================
+  */
 
   const handleSave = async () => {
     if (!auth.currentUser) return;
@@ -117,6 +130,12 @@ const handleSkip = () => {
   };
 
 
+  /*
+  ============================================
+  PAGE NAVIGATION
+  ============================================
+  */
+
   const nextPage = () => {
     if (currentPage < pages.length - 1) {
       setCurrentPage((prev) => prev + 1);
@@ -129,59 +148,24 @@ const handleSkip = () => {
     }
   };
 
-  const letterImages = { 
-    left:[ "/letterFW.png" , "/letterLFW.png" , "/letterSTB.png" ], 
-    right :[ "/letterHeart.png", "/letterRFW.png", "/letterStar.png", ], 
-    bottom : ["/letterCC.png"]
-  }; 
-    
-    const leftVariant = { 
-      hidden: { 
-        x: -100, 
-        opacity: 0 }, 
-
-      visible: (index) => ({ 
-        x: 0, 
-        opacity: 1, 
-        transition: { delay: index * 0.2, duration: 0.6, }, 
-      }), 
-    }; 
-
-    const rightVariant = { 
-      hidden: { x: 100, 
-        opacity: 0 }, 
-
-      visible: (index) => ({ 
-        x: 0, 
-        opacity: 1, 
-        transition: { delay: index * 0.2, duration: 0.6, }, 
-      }), 
-    }; 
-
-    const bottomVariant = { 
-      hidden: { 
-        y: 100, 
-        opacity: 0 },
-
-      visible: { 
-        y: 0, 
-        opacity: 1, 
-        transition: { duration: 0.8, }, }, 
-    };
-
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center">
 
- 
-      <div className="mt-8 flex justify-center items-center relative">
+      {/* ============================================
+          LETTER CONTAINER
+      ============================================ */}
+      <div className="relative">
 
         <img
           src="/letterBG.svg"
           alt="Letter Background"
           className="h-[700px] object-contain"
         />
-       
+
+        {/* ============================================
+            EDIT MODE (TEXTAREA)
+        ============================================ */}
         {!isViewing && (
           <textarea
             value={text}
@@ -191,14 +175,14 @@ const handleSkip = () => {
               absolute top-1/2 left-1/2
               -translate-x-1/2 -translate-y-1/2
               h-[500px] w-[400px]
-              p-16 mg:p-3 pt-12 md:pt-3 
+              p-8 pt-12
               rounded-xl
               text-black
               outline-none
 
               font-[Patrick_Hand]
               text-lg
-              leading-6 mg:leading-8
+              leading-8
               tracking-wide
 
               bg-transparent
@@ -218,18 +202,21 @@ const handleSkip = () => {
           />
         )}
 
+        {/* ============================================
+            VIEW MODE (ANIMATED TEXT)
+        ============================================ */}
         {isViewing && (
           <div
             className="
               absolute top-1/2 left-1/2
               -translate-x-1/2 -translate-y-1/2
               h-[500px] w-[400px]
-              p-16 mg:p-8 pt-12 md:pt-3
+              p-8 pt-12
 
               font-[Patrick_Hand]
               text-lg
-              leading-6 mg:leading-8
-              tracking-wide 
+              leading-8
+              tracking-wide
               text-black
 
               whitespace-pre-wrap
@@ -239,7 +226,11 @@ const handleSkip = () => {
           </div>
         )}
       </div>
-   
+
+
+      {/* ============================================
+          CONTROLS
+      ============================================ */}
       <div className="mt-4 flex gap-4">
 
         {/* Toggle Mode */}
@@ -262,9 +253,6 @@ const handleSkip = () => {
         {/* Pagination */}
         {isViewing && (
           <>
-            <button onClick={handleSkip} className="px-3 py-2 bg-gray-300 rounded">
-              Skip
-            </button>
             <button onClick={prevPage} className="px-3 py-2 bg-gray-300 rounded">
               Prev
             </button>
@@ -276,6 +264,9 @@ const handleSkip = () => {
       </div>
 
 
+      {/* ============================================
+          STATUS
+      ============================================ */}
       {saveStatus === "success" && (
         <p className="mt-2 text-green-600">Saved successfully</p>
       )}
@@ -288,4 +279,4 @@ const handleSkip = () => {
   );
 }
 
-export default Letter;
+export default CopyLetter;

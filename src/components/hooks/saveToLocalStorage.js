@@ -1,7 +1,3 @@
-// ------------------------------
-// localStorage Helper Utilities
-// ------------------------------
-
 // Base key for your app storage
 const STORAGE_KEY = "app_data";
 
