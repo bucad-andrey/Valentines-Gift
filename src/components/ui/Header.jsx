@@ -24,6 +24,7 @@ function Header() {
     "message1",
     "message2",
     "message3",
+    "letter",
     "preview"
   ];
 
