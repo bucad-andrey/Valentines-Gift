@@ -7,6 +7,7 @@ import Puzzle from "../games/puzzle/Puzzle";
 import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
 import Envelope from "../sender/EnvelopeGate";
 import Ending from "./Ending";
+import PreviewLetter from "../sender/previewLetter";
 
 function RecieverUI() {
   const { giftId } = useParams();
@@ -14,14 +15,14 @@ function RecieverUI() {
   console.log("🎁 Receiver giftId:", giftId);
 
   return (
-    <main className="pt-20 px-6">
+    <main className="pt-6 md:px-6">
 
       <Routes>
         {/* Default entry */}
         <Route path="/" element={<Envelope />} />
 
         <Route path="game1" element={<ChaseMyHeart />} />
-        <Route path="introduction" element={<Intro userId={giftId}/>} />
+        <Route path="introduction" element={<PreviewLetter userId={giftId}/>} />
         <Route path="game2" element={<Puzzle />} />
         <Route path="pictureMessage" element={<PictureMessage userId={giftId}/>} />
         <Route path="game3" element={<EatMe />} />

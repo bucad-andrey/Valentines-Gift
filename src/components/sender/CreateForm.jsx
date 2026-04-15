@@ -34,14 +34,6 @@ function CreateForm() {
     // your OTP logic later
   };
 
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-red-500 to-pink-600 overflow-hidden">
       <SpeedInsights/>
@@ -104,13 +96,6 @@ function CreateForm() {
             className="w-full bg-red-400 hover:bg-red-500 text-white py-3 rounded-lg transition-transform duration-300 hover:scale-105 shadow-lg"
           >
             Sign in with Google
-          </button>
-
-          <button
-            onClick={logOut}
-            className="w-full bg-gray-700 hover:bg-gray-800 text-white py-3 rounded-lg transition-transform duration-300 hover:scale-105"
-          >
-            Log Out
           </button>
         </div>
       </div>

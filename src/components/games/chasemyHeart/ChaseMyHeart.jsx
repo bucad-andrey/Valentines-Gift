@@ -1,7 +1,9 @@
-import React, { useReducer, useEffect, useParams } from "react";
+import React, { useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GAME_CONFIG, MESSAGES } from "./constants";
 import FloatingItem from "./FloatingItem";
+import heartImg from "/heart.png";
+import bombImg from "/bomb.png";
 
 
 const initialState = {
@@ -14,10 +16,15 @@ const initialState = {
 };
 
 const bombImages = [
-  "/bomb.png",
-  "/bomb.png",
-  "/bomb.png",
+  bombImg,
+  bombImg,
+  bombImg,
 ];
+
+const DEBUG_CHASE_MY_HEART =
+  (typeof import.meta !== "undefined" && import.meta.env?.DEV) ||
+  (typeof window !== "undefined" &&
+    window.localStorage?.getItem("debugChaseMyHeart") === "1");
 
 
 function gameReducer(state, action) {
@@ -111,6 +118,27 @@ function ChaseMyHeart() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!DEBUG_CHASE_MY_HEART) return;
+
+    const resolved = (path) => {
+      try {
+        return new URL(path, window.location.href).toString();
+      } catch {
+        return path;
+      }
+    };
+
+    console.log("[ChaseMyHeart] mounted", {
+      href: window.location.href,
+      origin: window.location.origin,
+      baseURI: document.baseURI,
+      heartPng: resolved(heartImg),
+      bombPng: resolved("/bomb.png"),
+      ua: navigator.userAgent,
+    });
+  }, []);
+
   // Game timer
   useEffect(() => {
     if (state.status !== "playing") return;
@@ -139,10 +167,27 @@ function ChaseMyHeart() {
         expiresAt: Date.now() + 3000,
         image: isBomb
           ? bombImages[Math.floor(Math.random() * bombImages.length)]
-          :  "/heart.png",
+          :  heartImg,
       };
       
-  
+      if (DEBUG_CHASE_MY_HEART) {
+        console.log("[ChaseMyHeart] spawn", {
+          id: newItem.id,
+          type: newItem.type,
+          x: newItem.x,
+          size: newItem.size,
+          image: newItem.image,
+          resolvedImage: (() => {
+            try {
+              return new URL(newItem.image, window.location.href).toString();
+            } catch {
+              return newItem.image;
+            }
+          })(),
+          itemsCountBefore: state.items.length,
+        });
+      }
+
       dispatch({ type: "SPAWN_ITEM", payload: newItem });
     }, spawnDelay);
   
@@ -180,9 +225,11 @@ function ChaseMyHeart() {
             onClick={() => {
               if (state.status === "won") {
                 navigate("../introduction");
-                console.log("PATH:", window.location.pathname);
-                console.log("USER:", user?.email);
-                console.log("giftId:", giftId);
+                if (DEBUG_CHASE_MY_HEART) {
+                  console.log("[ChaseMyHeart] continue clicked", {
+                    path: window.location.pathname,
+                  });
+                }
               } else {
                 dispatch({ type: "START_GAME" });
               }
@@ -200,28 +247,39 @@ function ChaseMyHeart() {
 
       {/* Game Field placeholder */}
       {state.status === "playing" && (
-  <div className="absolute inset-0">
-    {state.items.map(item => (
-  <FloatingItem
-    key={item.id}
-    item={item}
-    onClick={() => {
-      // ✅ THIS is where it belongs
-      if (state.status !== "playing") return;
+        <div className="absolute inset-0">
+        {state.items.map(item => (
+          <FloatingItem
+            key={item.id}
+            item={item}
+            onClick={() => {
+              // ✅ THIS is where it belongs
+              if (state.status !== "playing") return;
 
-      dispatch({ type: "REMOVE_ITEM", payload: item.id });
+              if (DEBUG_CHASE_MY_HEART) {
+                console.log("[ChaseMyHeart] click item", {
+                  id: item.id,
+                  type: item.type,
+                  image: item.image,
+                  scoreBefore: state.score,
+                  livesBefore: state.lives,
+                  timeLeft: state.timeLeft,
+                });
+              }
 
-      if (item.type === "heart") {
-        dispatch({ type: "GAIN_POINT" });
-      } else {
-        dispatch({ type: "HIT_BOMB" });
-      }
-    }}
-  />
-))}
+              dispatch({ type: "REMOVE_ITEM", payload: item.id });
 
-  </div>
-)}
+              if (item.type === "heart") {
+                dispatch({ type: "GAIN_POINT" });
+              } else {
+                dispatch({ type: "HIT_BOMB" });
+              }
+            }}
+          />
+        ))}
+
+        </div>
+      )}
 
     </div>
   );

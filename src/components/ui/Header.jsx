@@ -21,11 +21,11 @@ function Header() {
   ========================== */
 
   const tabs = [
-    "message1",
+    "letter",
     "message2",
     "message3",
-    "letter",
-    "preview"
+    "preview",
+    "generateUrl"
   ];
 
   /* =========================

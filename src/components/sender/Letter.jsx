@@ -4,6 +4,7 @@ import { auth } from "../utils/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firestore";
 import { saveMessageWithImage } from "../utils/firestoreHelpers";
+import Preview from "./previewLetter";
 
 function Letter() {
   const [text, setText] = useState(""); // full message
@@ -159,10 +160,10 @@ function Letter() {
     <section 
       className="
       w-full min-h-screen 
-      
+      bg-gradient-to-br from-primary-soft to-secondary-soft
       lg:flex flex-col
       items-center">
-        <div className="block lg:flex justify-center items-center relative">
+        <div className="block md:flex justify-center items-center relative">
 
           <img
             src="/letterBG.svg"

@@ -1,23 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { auth } from "../utils/firestore";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../utils/firestore";
+import { useNavigate } from "react-router-dom";
 
-function PreviewLetter() {
+
+function PreviewLetter({userId}) {
   const [text, setText] = useState("");
   const [pages, setPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [animatedText, setAnimatedText] = useState("");
   const [hasSkipped, setHasSkipped] = useState(false);
   const typingIntervalRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.currentUser) return;
+    if (!userId) return;
 
     const docRef = doc(
       db,
       "Senders",
-      auth.currentUser.uid,
+      userId,
       "message1",
       "message"
     );
@@ -99,6 +101,8 @@ function PreviewLetter() {
   const nextPage = () => {
     if (currentPage < pages.length - 1) {
       setCurrentPage((prev) => prev + 1);
+    } else {
+      navigate("../game2");
     }
   };
 
@@ -111,11 +115,10 @@ function PreviewLetter() {
   return (
     <section
       className="
-      w-full min-h-screen 
-      
-      lg:flex flex-col
-      items-center
-      "
+      bg-linear-to-br from-primary-soft to-secondary-soft
+      w-full min-h-screen
+      md:flex flex-col
+      items-center"
     >
       <div className="block lg:flex justify-center items-center relative">
         <img
@@ -186,7 +189,6 @@ function PreviewLetter() {
             <button
               onClick={nextPage}
               className="px-3 py-2 bg-gray-300 rounded disabled:opacity-50"
-              disabled={currentPage === pages.length - 1}
             >
               Next
             </button>

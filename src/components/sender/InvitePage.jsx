@@ -357,7 +357,7 @@ function InvitePage() {
                 <div className="relative">
                   <ImageUploader
                     width="100%"
-                    height="96px"
+                    height="120px"
                     initialImage={whereImagePreviews[index]}
                     onSelect={async (file) => {
                       setWhereImageFiles((prev) => {

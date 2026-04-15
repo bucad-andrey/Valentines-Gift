@@ -50,7 +50,7 @@ function ImageUploader({
   return (
     <div
       style={{ top, right, bottom, left, width, height, zIndex }}
-      className={`rounded-full bg-primary text-white shadow-lg cursor-pointer
+      className={`rounded-3xl bg-primary text-white shadow-lg cursor-pointer
       flex items-center justify-center overflow-hidden
       ${animations[animationType]}`}
       onClick={handleClick}
