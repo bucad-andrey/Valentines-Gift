@@ -7,5 +7,4 @@ export default defineConfig({
     host: true,
     allowedHosts: true
   },
-  
 })
