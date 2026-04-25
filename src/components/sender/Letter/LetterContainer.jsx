@@ -35,13 +35,11 @@ export default function LetterContainer() {
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   // FUNCTIONALITY: load initial data
   useEffect(() => {
     fetchMessage().then((msg) => {
       letter.setText(msg);
-      setLoading(false);
     });
   }, []);
 
@@ -71,9 +69,8 @@ export default function LetterContainer() {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-
   return (
+    
     <LetterView
       {...letter}
       onSave={handleSave}
