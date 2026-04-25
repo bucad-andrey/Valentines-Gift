@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LoveCard from "./LoveCard";
-import { auth } from "../utils/firestore";
-import { fetchLoveCards, saveLoveCard } from "../utils/firestoreHelpers";
+import { auth } from "../../utils/firestore";
+import { fetchLoveCards, saveLoveCard } from "../../utils/firestoreHelpers";
 
 function LovePage() {
   // You should be able to scroll on this page, even with many cards.

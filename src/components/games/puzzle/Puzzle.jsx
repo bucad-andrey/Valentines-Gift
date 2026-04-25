@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PuzzleBoard from "./PuzzleBoard";
 import PuzzlePiece from "./PuzzlePiece";
@@ -8,7 +9,8 @@ import { PUZZLE_CONFIG } from './puzzleConfig'
 function Puzzle({ onComplete }) {
   const navigate = useNavigate();
 
-  const game = usePuzzleGame(PUZZLE_CONFIG);
+  const boardRef = useRef(null);
+  const game = usePuzzleGame({ ...PUZZLE_CONFIG, boardRef });
 
   const handleContinue = () => {
     if (onComplete) {
@@ -20,9 +22,7 @@ function Puzzle({ onComplete }) {
   };
 
   return (
-    <div
-      className="relative w-full min-h-screen bg-pink-50 flex items-center justify-center py-16"
-    >
+    <div className="h-screen bg-pink-50 flex justify-center py-16 rounded-2xl">
       <div
         className="relative"
         style={{
@@ -39,52 +39,52 @@ function Puzzle({ onComplete }) {
           </div>
         )}
 
-<PuzzleBoard
-  cols={PUZZLE_CONFIG.cols}
-  rows={PUZZLE_CONFIG.rows}
-  pieceSize={PUZZLE_CONFIG.pieceSize}
-  pieces={game.pieces}
-  imageUrl={PUZZLE_CONFIG.imageUrl}
-  showHint={game.showHint}
-/>
-<button
-  type="button"
-  onClick={() => game.setShowHint((v) => !v)}
-  className="mt-4 mx-auto block text-sm text-pink-600 underline"
->
-  {game.showHint ? "Hide hint" : "Show hint"}
-</button>
+        <PuzzleBoard
+          ref={boardRef}
+          cols={PUZZLE_CONFIG.cols}
+          rows={PUZZLE_CONFIG.rows}
+          pieceSize={PUZZLE_CONFIG.pieceSize}
+          pieces={game.pieces}
+          imageUrl={PUZZLE_CONFIG.imageUrl}
+          showHint={game.showHint}/>
+        <button
+          type="button"
+          onClick={() => game.setShowHint((v) => !v)}
+          className="mt-4 mx-auto block text-sm text-pink-600 underline"
+        >
+          {game.showHint ? "Hide hint" : "Show hint"}
+        </button>
 
 
-<PuzzleTray>
-  {game.pieces
-    .filter((p) => !p.isPlaced && !p.isDragging)
-    .map((piece) => (
-      <PuzzlePiece
-        key={piece.id}
-        piece={piece}
-        pieceSize={PUZZLE_CONFIG.pieceSize}
-        imageUrl={PUZZLE_CONFIG.imageUrl}
-        cols={PUZZLE_CONFIG.cols}
-        canSnap={game.canSnap(piece)}
-        onPointerDown={(e) => game.grabPiece(e, piece.id)}
-      />
-    ))}
-</PuzzleTray>
+        <PuzzleTray>
+          {game.pieces
+            .filter((p) => !p.isPlaced && !p.isDragging)
+            .map((piece) => (
+              <PuzzlePiece
+                key={piece.id}
+                piece={piece}
+                pieceSize={PUZZLE_CONFIG.pieceSize}
+                imageUrl={PUZZLE_CONFIG.imageUrl}
+                cols={PUZZLE_CONFIG.cols}
+                canSnap={game.canSnap(piece)}
+                onPointerDown={(e) => game.grabPiece(e, piece.id)}
+              />
+            ))}
+        </PuzzleTray>
 
-{game.pieces
-  .filter((p) => p.isDragging || p.isPlaced)
-  .map((piece) => (
-    <PuzzlePiece
-      key={piece.id}
-      piece={piece}
-      pieceSize={PUZZLE_CONFIG.pieceSize}
-      imageUrl={PUZZLE_CONFIG.imageUrl}
-      cols={PUZZLE_CONFIG.cols}
-      canSnap={game.canSnap(piece)}
-      onPointerDown={(e) => game.grabPiece(e, piece.id)}
-    />
-  ))}
+        {game.pieces
+          .filter((p) => p.isDragging || p.isPlaced)
+          .map((piece) => (
+            <PuzzlePiece
+              key={piece.id}
+              piece={piece}
+              pieceSize={PUZZLE_CONFIG.pieceSize}
+              imageUrl={PUZZLE_CONFIG.imageUrl}
+              cols={PUZZLE_CONFIG.cols}
+              canSnap={game.canSnap(piece)}
+              onPointerDown={(e) => game.grabPiece(e, piece.id)}
+            />
+          ))}
 
 
         {game.showResetMessage && (

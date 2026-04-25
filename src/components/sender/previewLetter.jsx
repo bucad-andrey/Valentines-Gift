@@ -120,7 +120,7 @@ function PreviewLetter({userId}) {
       md:flex flex-col
       items-center"
     >
-      <div className="block lg:flex justify-center items-center relative">
+      <div className="block lg:flex justify-center items-center relative">  
         <img
           src="/letterBG.svg"
           alt="Letter Background"

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import generateGiftURL from '../ui/generateGiftURL'
 import { auth } from '../utils/firestore';
 
-function Preview() {
+function generatedUrl() {
   const [generatedUrl, setGeneratedUrl] = useState()
 
   async function handleGenerate() {
@@ -30,4 +30,4 @@ function Preview() {
   )
 }
 
-export default Preview
+export default generatedUrl;

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { auth } from "../utils/firestore";
+import { auth } from "../../utils/firestore";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../utils/firestore";
-import { saveMessageWithImage } from "../utils/firestoreHelpers";
-import Preview from "./previewLetter";
+import { db } from "../../utils/firestore";
+import { saveMessageWithImage } from "../../utils/firestoreHelpers";
+import Preview from "../previewLetter";
 
 function Letter() {
   const [text, setText] = useState(""); // full message
@@ -214,7 +214,7 @@ function Letter() {
    
       <div 
         className="
-        flex gap-4 mt-10 
+        flex gap-4 mt-5 
         overflow-scroll relative
         
         md:absolute md:bottom-1

@@ -1,14 +1,13 @@
-function PuzzleBoard({
-  cols,
-  rows,
-  pieceSize,
-  pieces,
-  imageUrl,
-  showHint,
-}) {
+import { forwardRef } from "react";
+
+const PuzzleBoard = forwardRef(function PuzzleBoard(
+  { cols, rows, pieceSize, pieces, imageUrl, showHint },
+  ref
+) {
   return (
     <div
-      className="relative border-4 border-pink-400 rounded-lg  overflow-hidden"
+      ref={ref}
+      className="border-4 border-pink-400 rounded-lg overflow-hidden relative left-5"
       style={{
         width: cols * pieceSize,
         height: rows * pieceSize,
@@ -41,6 +40,6 @@ function PuzzleBoard({
       ))}
     </div>
   );
-}
+});
 
 export default PuzzleBoard;

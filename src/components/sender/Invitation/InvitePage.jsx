@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ImageUploader from "../ui/ImageUploader";
-import { auth } from "../utils/firestore";
+import ImageUploader from "../../ui/ImageUploader";
+import { auth } from "../../utils/firestore";
 import {
   saveFinalMessage,
   fetchLatestFinalMessage,
-} from "../utils/firestoreHelpers";
+} from "../../utils/firestoreHelpers";
 import {
   loadInviteDraft,
   saveInviteDraft,
-} from "../hooks/saveToLocalStorage";
+} from "../../hooks/saveToLocalStorage";
 
 //This will be about the theme song or record message of the Sender
 //It will have a more message but more about the experience of being together and how much the Sender willing to persue the future with the Reciever

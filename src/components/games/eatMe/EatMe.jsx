@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GameCanvas from "./GameCanvas";
 import { useSnakeGame } from "./useSnakeGame";
+import './EatMe.css'
 
 function EatMe() {
   const game = useSnakeGame();
@@ -60,12 +61,12 @@ function EatMe() {
   }, [game.status, navigate, game]);
 
   return (
-    <div className="relative text-center flex justify-center px-4">
-      <div className="w-full max-w-xl">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-primary-text mb-2">
+    <section className="eatMeContainer">
+      <div className="something">
+        <h2 className="text-2xl sm:text-3xl font-semibold  mb-2">
           Eat Me <span className="inline-block">💖</span>
         </h2>
-        <p className="text-sm text-primary-text/70 mb-4">
+        <p className="text-sm mb-4">
           Desktop: use <span className="font-semibold">W A S D</span> • Mobile: use the buttons below
         </p>
 
@@ -119,17 +120,17 @@ function EatMe() {
           </div>
         </div>
 
-        <div className="mt-3 flex items-center justify-center gap-3">
-          <p className="text-primary-text font-medium">
+        <div className="mt-3 flex items-center justify-center gap-3 text-primary-soft">
+          <p className=" font-medium">
             Score: <span className="font-semibold">{game.score}</span>
           </p>
-          <span className="text-primary-text/40">•</span>
-          <p className="text-primary-text/80 text-sm">
+          <span >•</span>
+          <p className=" text-sm">
             Goal: {game.score}/{10}
           </p>
         </div>
 
-        <p className="sm:hidden mt-4 text-xs text-primary-text/70">
+        <p className="sm:hidden mt-4 text-xs">
           Tip: tap gently—no need to hold.
         </p>
       </div>
@@ -184,7 +185,7 @@ function EatMe() {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

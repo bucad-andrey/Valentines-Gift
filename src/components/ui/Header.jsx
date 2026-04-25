@@ -22,6 +22,7 @@ function Header() {
 
   const tabs = [
     "letter",
+    "preLetter",
     "message2",
     "message3",
     "preview",

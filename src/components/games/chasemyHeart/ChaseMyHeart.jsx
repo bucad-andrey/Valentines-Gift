@@ -1,122 +1,25 @@
 import React, { useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GAME_CONFIG, MESSAGES } from "./constants";
+import { GAME_CONFIG, bombImages } from "./constants";
+import { gameReducer, initialState } from "./reducer";
 import FloatingItem from "./FloatingItem";
 import heartImg from "/heart.png";
-import bombImg from "/bomb.png";
-
-
-const initialState = {
-  status: "idle", // idle | playing | won | lost
-  score: 0,
-  lives: GAME_CONFIG.STARTING_LIVES,
-  timeLeft: GAME_CONFIG.TIME_LIMIT,
-  items: [],
-  message: "",
-};
-
-const bombImages = [
-  bombImg,
-  bombImg,
-  bombImg,
-];
 
 const DEBUG_CHASE_MY_HEART =
   (typeof import.meta !== "undefined" && import.meta.env?.DEV) ||
   (typeof window !== "undefined" &&
     window.localStorage?.getItem("debugChaseMyHeart") === "1");
 
-
-function gameReducer(state, action) {
-  
-
-    /*
-    GAME IDEA : 1ST PAGE
-    HEARTS WILL POP UP AND THE RECIEVER SHOULD CLICK THEM
-    AFTER CLICKING AS MANY AS REQUIRED THE GAME WILL END
-    SOME PICTURE OF THEM WILL POP UP ALSO BUT IT WILL BE A BOMB
-    THE GAME WILL RESET IF THE BOMB IS CLICKED
-    AFTER COMPLETING IT WILL SAY "YOU TOUCHED MY HEART SUCCESFULLY"
-  */
-
-    
-  
-  switch (action.type) {
-    case "START_GAME":
-      return {
-        ...initialState,
-        status: "playing",
-      };
-
-    case "TICK":
-      if (state.timeLeft <= 1) {
-        return {
-          ...state,
-          status: "lost",
-          message: MESSAGES.encouragement,
-        };
-      }
-      return {
-        ...state,
-        timeLeft: state.timeLeft - 1,
-      };
-
-    case "GAIN_POINT": {
-      const newScore = state.score + 1;
-
-      if (newScore >= GAME_CONFIG.HEARTS_TO_WIN) {
-        return {
-          ...state,
-          score: newScore,
-          status: "won",
-          message: MESSAGES.win,
-        };
-      }
-
-      return { ...state, score: newScore };
-    }
-
-    case "HIT_BOMB": {
-      const newLives = state.lives - 1;
-
-      if (newLives <= 0) {
-        return {
-          ...state,
-          lives: 0,
-          status: "lost",
-          message: MESSAGES.encouragement,
-        };
-      }
-
-      return { ...state, lives: newLives };
-    }
-
-    default:
-      return state;
-      case "SPAWN_ITEM":
-  return {
-    ...state,
-    items: [...state.items, action.payload],
-  };
-
-case "REMOVE_ITEM":
-  return {
-    ...state,
-    items: state.items.filter(item => item.id !== action.payload),
-  };
-
-case "CLEAR_ITEMS":
-  return {
-    ...state,
-    items: [],
-  };
-
-  }
-}
-
 function ChaseMyHeart() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const navigate = useNavigate();
+  /*
+    FUNCTIONALITY:
+    Debug reducer state changes
+    */
+    useEffect(() => {
+      console.log("[DEBUG] state updated:", state);
+    }, [state]);
 
   useEffect(() => {
     if (!DEBUG_CHASE_MY_HEART) return;

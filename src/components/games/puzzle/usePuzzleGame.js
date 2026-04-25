@@ -6,10 +6,12 @@ export function usePuzzleGame({
   pieceSize,
   snapDistance,
   maxMistakes,
+  boardRef,
 }) {
   const [showHint, setShowHint] = useState(true);
   const [activePieceId, setActivePieceId] = useState(null);
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
+  const [boardOffset, setBoardOffset] = useState({ x: 0, y: 0 });
   const [mistakes, setMistakes] = useState(0);
   const [showResetMessage, setShowResetMessage] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -47,8 +49,11 @@ export function usePuzzleGame({
   }, [pieces]);
 
   function canSnap(piece) {
-    const dx = piece.x - piece.correctX;
-    const dy = piece.y - piece.correctY;
+    const targetX = boardOffset.x + piece.correctX;
+    const targetY = boardOffset.y + piece.correctY;
+
+    const dx = piece.x - targetX;
+    const dy = piece.y - targetY;
     return Math.sqrt(dx * dx + dy * dy) < snapDistance;
   }
 
@@ -77,6 +82,14 @@ export function usePuzzleGame({
     const parentRect = e.currentTarget.offsetParent.getBoundingClientRect();
     const startX = pieceRect.left - parentRect.left;
     const startY = pieceRect.top - parentRect.top;
+
+    if (boardRef?.current) {
+      const boardRect = boardRef.current.getBoundingClientRect();
+      setBoardOffset({
+        x: boardRect.left - parentRect.left,
+        y: boardRect.top - parentRect.top,
+      });
+    }
 
     setPieces((prev) =>
       prev.map((p) =>
@@ -113,6 +126,17 @@ export function usePuzzleGame({
     // so we need to convert the global pointer coordinates into that space.
     const parentRect = e.currentTarget.getBoundingClientRect();
 
+    console.log(parentRect);
+
+    if (boardRef?.current) {
+      const boardRect = boardRef.current.getBoundingClientRect();
+      const nextOffset = {
+        x: boardRect.left - parentRect.left,
+        y: boardRect.top - parentRect.top,
+      };
+      setBoardOffset(nextOffset);
+    }
+
     setPieces((prev) =>
       prev.map((p) =>
         p.id === activePieceId
@@ -126,22 +150,39 @@ export function usePuzzleGame({
     );
   }
 
-  function releasePiece() {
+  function releasePiece(e) {
     if (activePieceId === null || isCompleted) return;
 
-    let snapped = false;
+    let localBoardOffset = boardOffset;
+    if (e?.currentTarget && boardRef?.current) {
+      const parentRect = e.currentTarget.getBoundingClientRect();
+      const boardRect = boardRef.current.getBoundingClientRect();
+      localBoardOffset = {
+        x: boardRect.left - parentRect.left,
+        y: boardRect.top - parentRect.top,
+      };
+      setBoardOffset(localBoardOffset);
+    }
+
+    const activePiece = pieces.find((p) => p.id === activePieceId);
+    const targetX =
+      localBoardOffset.x + (activePiece?.correctX ?? 0);
+    const targetY =
+      localBoardOffset.y + (activePiece?.correctY ?? 0);
+    const dx = (activePiece?.x ?? 0) - targetX;
+    const dy = (activePiece?.y ?? 0) - targetY;
+    const shouldSnap = Math.sqrt(dx * dx + dy * dy) < snapDistance;
 
     setPieces((prev) =>
       prev.map((p) => {
         if (p.id !== activePieceId) return p;
 
-        if (canSnap(p)) {
-          snapped = true;
+        if (shouldSnap) {
           setShowHint(false); // 👈 auto-hide hint
           return {
             ...p,
-            x: p.correctX,
-            y: p.correctY,
+            x: targetX,
+            y: targetY,
             isPlaced: true,
             isDragging: false,
           };
@@ -157,7 +198,7 @@ export function usePuzzleGame({
       })
     );
 
-    if (!snapped) {
+    if (!shouldSnap) {
       setMistakes((m) => m + 1);
     }
 

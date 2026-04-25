@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+.eatMeContainer {
+  @apply 
+  relative 
+  text-center 
+  flex 
+  justify-center 
+  px-4
+  bg-red-500
+
+}
+
+
+.something {
+  @apply w-full max-w-xl;
+  
+  text : var(--color-primary-text)
+}
