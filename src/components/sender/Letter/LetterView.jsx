@@ -106,7 +106,7 @@ const letterImages = {
           <motion.img
             key={`right-${index}`}
             src={item.src}
-            className={"absolute right-0 "}
+            className={"absolute "}
 
             variants={rightVariant}
             initial="hidden"
