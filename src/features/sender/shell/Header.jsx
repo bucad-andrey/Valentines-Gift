@@ -1,51 +1,28 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import LogOut from "./LogOut";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../app/routes";
+import { LogOut } from "../../../shared/ui/LogOut";
 
-function Header() {
-  /* =========================
-     STATE
-  ========================== */
-
-  // Controls mobile drawer (burger menu)
+export function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  // Tracks scroll position for glass effect
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  /* =========================
-     NAVIGATION TABS
-  ========================== */
-
   const tabs = [
-    "letter",
-    "preLetter",  
-    "message2",
-    "message3",
-    "generateUrl"
+    { key: "letter", label: "letter", to: ROUTES.sender.letter },
+    { key: "preLetter", label: "preLetter", to: ROUTES.sender.preLetter },
+    { key: "message2", label: "message2", to: ROUTES.sender.message2 },
+    { key: "message3", label: "message3", to: ROUTES.sender.message3 },
+    { key: "generateUrl", label: "generateUrl", to: ROUTES.sender.generateUrl },
   ];
 
-  /* =========================
-     SCROLL LISTENER
-     Desktop glass effect trigger
-  ========================== */
-
   useEffect(() => {
-    const onScroll = () => {
-      // Toggle glass effect when scrolling down
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  /* =========================
-     RENDER
-  ========================== */
 
   return (
     <header
@@ -55,11 +32,6 @@ function Header() {
       `}
     >
       <nav className="flex items-center space-x-5 justify-end-safe px-4 py-3 md:px-8">
-
-        {/* =========================
-           MOBILE: BURGER BUTTON
-           Hidden on md+
-        ========================== */}
         <button
           onClick={() => setDrawerOpen(true)}
           className="md:hidden bg-white p-2 rounded-lg shadow"
@@ -67,17 +39,13 @@ function Header() {
           ☰
         </button>
 
-        {/* =========================
-           DESKTOP: INLINE TABS (md+)
-        ========================== */}
         <div className="hidden md:flex items-center gap-6">
           {tabs.map((tab) => {
-            const isActive = location.pathname === `/${tab}`;
-
+            const isActive = location.pathname === tab.to;
             return (
               <button
-                key={tab}
-                onClick={() => navigate(`/${tab}`)}
+                key={tab.key}
+                onClick={() => navigate(tab.to)}
                 className={`
                   capitalize font-medium transition
                   ${
@@ -87,31 +55,23 @@ function Header() {
                   }
                 `}
               >
-                {tab}
+                {tab.label}
               </button>
             );
           })}
         </div>
 
-        {/* =========================
-           LOGOUT (Always visible)
-        ========================== */}
         <LogOut />
       </nav>
 
-      {/* =========================
-         MOBILE OVERLAY
-      ========================== */}
-      <div onClick={() => setDrawerOpen(false)}
+      <div
+        onClick={() => setDrawerOpen(false)}
         className={`
           fixed inset-0 bg-black/40 z-40 transition-opacity
           ${drawerOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
         `}
       />
 
-      {/* =========================
-         MOBILE DRAWER
-      ========================== */}
       <div
         className={`
           fixed top-0 left-0 h-full w-64 bg-white z-50 shadow-xl
@@ -121,14 +81,13 @@ function Header() {
       >
         <div className="p-6 space-y-4">
           {tabs.map((tab) => {
-            const isActive = location.pathname === `/${tab}`;
-
+            const isActive = location.pathname === tab.to;
             return (
               <button
-                key={tab}
+                key={tab.key}
                 onClick={() => {
-                  navigate(`/${tab}`);
-                  setDrawerOpen(false); // close drawer on navigation
+                  navigate(tab.to);
+                  setDrawerOpen(false);
                 }}
                 className={`
                   block w-full text-left capitalize px-3 py-2 rounded-lg
@@ -139,7 +98,7 @@ function Header() {
                   }
                 `}
               >
-                {tab}
+                {tab.label}
               </button>
             );
           })}
@@ -149,4 +108,3 @@ function Header() {
   );
 }
 
-export default Header;
