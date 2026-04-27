@@ -11,7 +11,7 @@ import { Puzzle } from "../../games/puzzle/Puzzle";
 import { EatMe } from "../../games/eat-me/EatMe";
 import { PreviewLetter } from "../views/PreviewLetter";
 
-export function ReceiverRoutes() {
+export function ReceiverRoutes({ senderId }) {
   const { giftId } = useParams();
 
   return (
@@ -20,11 +20,20 @@ export function ReceiverRoutes() {
         <Route path="/" element={<EnvelopeGate />} />
 
         <Route path="game1" element={<ChaseMyHeart />} />
-        <Route path="introduction" element={<PreviewLetter userId={giftId} />} />
+        <Route
+          path="introduction"
+          element={<PreviewLetter userId={senderId || giftId} />}
+        />
         <Route path="game2" element={<Puzzle />} />
-        <Route path="pictureMessage" element={<PictureMessage userId={giftId} />} />
+        <Route
+          path="pictureMessage"
+          element={<PictureMessage userId={senderId || giftId} />}
+        />
         <Route path="game3" element={<EatMe />} />
-        <Route path="finalMessage" element={<FinalMessage userId={giftId} />} />
+        <Route
+          path="finalMessage"
+          element={<FinalMessage userId={senderId || giftId} />}
+        />
         <Route path="ending" element={<Ending />} />
 
         <Route path="*" element={<Navigate to="." replace />} />

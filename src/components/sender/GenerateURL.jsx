@@ -1,33 +1,45 @@
-import React, { useState } from 'react'
-import generateGiftURL from '../ui/generateGiftURL'
-import { auth } from '../utils/firestore';
+import React, { useState } from "react";
+import { auth } from "../../shared/lib/firebase/client";
+import { createGiftLink } from "../../shared/lib/gifts/gifts";
 
-function generatedUrl() {
-  const [generatedUrl, setGeneratedUrl] = useState()
+function GenerateURL() {
+  const [generatedUrl, setGeneratedUrl] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | working | error
+  const [error, setError] = useState("");
 
   async function handleGenerate() {
+    setError("");
+    setStatus("working");
     try {
-      const url = await generateGiftURL({senderEmail : auth?.currentUser?.uid});
-      console.log("🎉 FINAL URL:", url);
+      const senderId = auth?.currentUser?.uid;
+      const { url } = await createGiftLink({ senderId });
       setGeneratedUrl(url);
+      setStatus("idle");
     } catch (err) {
-      console.error("Generation failed:", err.message);
-      alert(err.message);
+      setStatus("error");
+      setError(err?.message || "Failed to generate link");
     }
   }
 
-
   return (
-    <section className='flex justify-center items-center flex-col space-y-10'>
-      <button onClick={handleGenerate} className=''>
+    <section className="flex justify-center items-center flex-col space-y-6">
+      <button
+        onClick={handleGenerate}
+        disabled={status === "working"}
+        className="px-6 py-3 rounded-xl bg-primary text-white hover:bg-primary-hover transition font-semibold disabled:opacity-60"
+      >
         Generate Url
       </button>
 
-      <a href={generatedUrl} target='_blank'>
-        {generatedUrl}
-      </a>
+      {error && <div className="text-error">{error}</div>}
+
+      {generatedUrl && (
+        <a href={generatedUrl} target="_blank" rel="noreferrer" className="underline text-primary-text">
+          {generatedUrl}
+        </a>
+      )}
     </section>
-  )
+  );
 }
 
-export default generatedUrl;
+export default GenerateURL;

@@ -1,5 +1,6 @@
-import LetterDefault from "../../../components/sender/Letter/Letter.jsx";
+import LetterContainer from "./LetterContainer";
 
-export const Letter = LetterDefault;
-
+export function Letter() {
+  return <LetterContainer />;
+}
 

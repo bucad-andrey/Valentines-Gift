@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoveCard from "../../../components/sender/Message 2/LoveCard.jsx";
+import LoveCard from "../../sender/message2/LoveCard.jsx";
 import { fetchLoveCards } from "../../../shared/lib/firestore/firestoreHelpers";
 
 export function PictureMessage({ userId }) {
