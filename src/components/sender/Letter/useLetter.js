@@ -9,17 +9,18 @@ export function useLetter(initialText = "") {
 
   // FUNCTIONALITY: recompute pages when text changes
   useEffect(() => {
-    const newPages = splitText(text, 500);
+    const newPages = splitText(text, 300);
     setPages(newPages);
 
     setCurrentPage((prev) =>
       prev >= newPages.length ? newPages.length - 1 : prev
     );
   }, [text]);
+  
 
   // FUNCTIONALITY: update current page text
   const updatePage = (value) => {
-    const max = 500;
+    const max = 300;
 
     const before = text.slice(0, currentPage * max);
     const after = text.slice((currentPage + 1) * max);
@@ -33,6 +34,8 @@ export function useLetter(initialText = "") {
 
   const prevPage = () =>
     setCurrentPage((p) => Math.max(p - 1, 0));
+
+  console.log(text.length)
 
   return {
     text,

@@ -85,14 +85,15 @@ const letterImages = {
         />
 
        {/* FUNCTIONALITY: decorative animated images (on top layer) */}
-        <div className="absolute inset-0 z-20 pointer-events-none">
+        <div className="absolute inset-0 z-20 pointer-events-none flex justify-center">
 
           {/* LEFT */}
           {letterImages.left.map((item, index) => (
           <motion.img
             key={`left-${index}`}
             src={item.src}
-            className={`absolute`}
+            className={`absolute w-[400px] h-auto object-contain 
+                        block lg:w-[700px] lg:h-[650px]`}
 
             variants={leftVariant}
             initial="hidden"
@@ -106,7 +107,8 @@ const letterImages = {
           <motion.img
             key={`right-${index}`}
             src={item.src}
-            className={"absolute "}
+            className={`absolute w-[400px] h-auto object-contain 
+                        block lg:w-[700px] lg:h-[650px]`}
 
             variants={rightVariant}
             initial="hidden"
@@ -120,7 +122,8 @@ const letterImages = {
           <motion.img
             key={`bottom-${index}`}
             src={item.src}
-            className={`absolute`}
+            className={`absolute w-[400px] h-auto object-contain 
+                        block lg:w-[700px] lg:h-[650px] md:hidden`}
 
             variants={bottomVariant}
             initial="hidden"
@@ -140,7 +143,7 @@ const letterImages = {
           value={pages[currentPage] || ""}
           onChange={(e) => updatePage(e.target.value)}
           className="
-          z-10
+          z-90
           absolute top-1/2 left-1/2
           -translate-x-1/2 -translate-y-1/2
           h-[500px] w-screen md:w-[400px]
@@ -148,6 +151,7 @@ const letterImages = {
           rounded-xl
           text-black
           outline-none
+          border
 
           font-[Patrick_Hand]
           text-lg
@@ -200,8 +204,8 @@ const letterImages = {
       </div>
 
       {/* FUNCTIONALITY: status */}
-      {saveStatus === "success" && <p>Saved successfully</p>}
-      {saveStatus === "error" && <p>Save failed</p>}
+      {saveStatus === "success" && <p className="mt- text-green-600">Saved successfully</p>}
+      {saveStatus === "error" && <p className="mt- text-red-600">Save failed</p>}
     </section>
   );
 }

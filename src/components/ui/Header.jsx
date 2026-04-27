@@ -21,11 +21,9 @@ function Header() {
   ========================== */
 
   const tabs = [
-    "letter",
-    "preLetter",  
+    "letter",  
     "message2",
     "message3",
-    "preview",
     "generateUrl"
   ];
 

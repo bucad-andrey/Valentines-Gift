@@ -4,8 +4,11 @@ import { auth } from "../../utils/firestore";
 import { fetchLoveCards, saveLoveCard } from "../../utils/firestoreHelpers";
 
 function LovePage() {
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState(null);
+
   // You should be able to scroll on this page, even with many cards.
-  const CARD_COUNT = 6; // adjust as needed
+  const CARD_COUNT = 6;
 
   const [cards, setCards] = useState(
     () =>
@@ -15,8 +18,6 @@ function LovePage() {
         imageUrl: null,
       }))
   );
-  const [isSaving, setIsSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState(null);
 
   // Load any existing cards for this user
   useEffect(() => {
