@@ -112,7 +112,7 @@ function LovePage() {
   };
 
   return (
-    <section className="bg-gradient-to-br from-primary-soft to-secondary-soft p-6 min-h-screen">
+    <section className="px-2 min-h-screen">
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-2xl font-semibold text-primary-text">

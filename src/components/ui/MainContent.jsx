@@ -6,7 +6,7 @@ import GenerateUrl from "../sender/GenerateURL";
 
 function MainContent() {
   return (
-    <main className="pt-20 px-6">
+    <main className="pt-20 px-6 min-h-screen bg-gradient-to-br from-primary-soft to-secondary-soft">
 
       <Routes>
         <Route path="/" element={<Navigate to="/letter" replace />} />

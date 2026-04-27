@@ -267,7 +267,7 @@ function InvitePage() {
   };
 
   return (
-    <section className="bg-linear-to-br from-primary-soft to-secondary-soft px-4 sm:px-6 py-8 text-primary-text min-h-screen">
+    <section className="px-4 text-primary-text min-h-screen">
       <div className="max-w-3xl mx-auto bg-white/60 backdrop-blur-xl p-5 sm:p-8 rounded-3xl shadow-2xl space-y-7 border border-white/30">
 
         <div className="space-y-2">
