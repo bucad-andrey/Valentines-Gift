@@ -4,31 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { saveMessageWithImage } from "../../utils/firestoreHelpers";
 import { useLetter } from "./useLetter";
 import LetterView from "./LetterView";
-
-// FUNCTIONALITY: fetch message from firestore or localStorage
-async function fetchMessage() {
-  if (!auth.currentUser) {
-    return localStorage.getItem("letterSent") || "";
-  }
-
-  try {
-    const ref = doc(
-      db,
-      "Senders",
-      auth.currentUser.uid,
-      "message1",
-      "message"
-    );
-
-    const snap = await getDoc(ref);
-
-    if (snap.exists()) return snap.data()?.value || "";
-
-    return localStorage.getItem("letterSent") || "";
-  } catch {
-    return localStorage.getItem("letterSent") || "";
-  }
-}
+import { fetchMessage } from "../../utils/firestoreHelpers";
 
 export default function LetterContainer() {
   const letter = useLetter("");
@@ -38,9 +14,15 @@ export default function LetterContainer() {
 
   // FUNCTIONALITY: load initial data
   useEffect(() => {
-    fetchMessage().then((msg) => {
+    const loadMessage = async () => {
+      const userId = auth?.currentUser?.uid || null;
+  
+      const msg = await fetchMessage(userId);
+  
       letter.setText(msg);
-    });
+    };
+  
+    loadMessage();
   }, []);
 
   // FUNCTIONALITY: persist locally

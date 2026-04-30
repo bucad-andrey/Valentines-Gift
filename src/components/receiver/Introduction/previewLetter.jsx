@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../utils/firestore";
+import { db } from "../../utils/firestore";
 import { useNavigate } from "react-router-dom";
 
 

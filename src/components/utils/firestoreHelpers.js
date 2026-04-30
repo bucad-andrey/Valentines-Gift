@@ -88,6 +88,43 @@ export const saveMessageWithImage = async ({
   return message;
 };
 
+export const fetchMessage = async (userId) => {
+
+  // FUNCTIONALITY: fallback when not logged in
+  
+  if (!userId) {
+    return localStorage.getItem("letterSent") || "";
+  }
+
+  try {
+    // FUNCTIONALITY: build Firestore reference
+    const ref = doc(
+      db,
+      "Senders",
+      userId,
+      "message1",
+      "message"
+    );
+
+    // FUNCTIONALITY: fetch document
+    const snap = await getDoc(ref);
+
+    // FUNCTIONALITY: return Firestore value if exists
+    if (snap.exists()) {
+      return snap.data()?.value || "";
+    }
+
+    // FUNCTIONALITY: fallback if no document
+    return localStorage.getItem("letterSent") || "";
+
+  } catch (error) {
+    console.error("fetchMessage error:", error);
+
+    // FUNCTIONALITY: fallback on error
+    return localStorage.getItem("letterSent") || "";
+  }
+};
+
 /*
   Save a single LovePage card (image + message) into Firestore.
 
@@ -135,8 +172,8 @@ export const saveLoveCard = async ({
 };
 
 export const fetchLoveCards = async (userEmail) => {
-  const colRef = collection(db, "Senders", userEmail, "loveCards");
-  const snapshot = await getDocs(colRef);
+  const collectionReference = collection(db, "Senders", userEmail, "loveCards");
+  const snapshot = await getDocs(collectionReference);
 
   const cards = [];
 

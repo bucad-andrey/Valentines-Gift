@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
-import Intro from "../receiver/Intro";
 import PictureMessage from "../receiver/PictureMessage";
 import FinalMessage from "../receiver/FinalMessage";
 import EatMe from "../games/eatMe/EatMe";
@@ -7,7 +6,7 @@ import Puzzle from "../games/puzzle/Puzzle";
 import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
 import Envelope from "../sender/EnvelopeGate";
 import Ending from "./Ending";
-import PreviewLetter from "../sender/previewLetter";
+import PreviewLetter from "./Introduction/previewLetter";
 
 function RecieverUI() {
   const { giftId } = useParams();
