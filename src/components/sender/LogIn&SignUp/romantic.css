@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* Floating heart particles */
 .heart {
   position: absolute;
@@ -22,4 +24,13 @@
   background-image: url("https://png.pngtree.com/png-clipart/20201208/original/pngtree-light-red-love-heart-pattern-png-image_5640127.jpg");
   background-size: contain;
   opacity: 0.15;
+}
+
+
+.rounded-input {
+ @apply w-full p-3 
+ rounded-2xl 
+ bg-white/70 text-black 
+ placeholder-gray-600 
+ focus:outline-none border border-gray-300;
 }
