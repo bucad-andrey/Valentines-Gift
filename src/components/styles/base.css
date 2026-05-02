@@ -1,9 +1,0 @@
-@import 'tailwindcss';
-
-.background {
-  @apply 
-  w-full min-h-screen 
-  
-  lg:flex flex-col
-  items-center
-}
