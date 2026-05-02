@@ -3,7 +3,7 @@ import Message2 from "../../features/sender/message/LoveCardPage";
 import Message3 from "../../features/sender/Invitation/InvitePage";
 import Letter from "../../features/sender/Letter/LetterContainer"
 import GenerateUrl from "../sender/GenerateURL";
-import IntroductionLetter from "../receiver/Introduction/IntroductionLetter";
+import IntroductionLetter from "../../features/receiver/Introduction/IntroductionLetter";
 
 function MainContent() {
   return (

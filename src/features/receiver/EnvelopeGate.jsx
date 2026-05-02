@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, color } from "framer-motion";
-import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
-import EatMe from "../games/eatMe/EatMe";
+import ChaseMyHeart from "../../components/games/chasemyHeart/ChaseMyHeart";
+import EatMe from "../../components/games/eatMe/EatMe";
 
 /*
   EnvelopeGate
