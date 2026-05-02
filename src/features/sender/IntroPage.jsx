@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { auth } from "../utils/firestore";
-import ImageUploader from "../ui/ImageUploader";
-import { saveMessageWithImage } from "../utils/firestoreHelpers";
+import { auth } from "../../components/utils/firestore";
+import ImageUploader from "../../components/ui/ImageUploader";
+import { saveMessageWithImage } from "../../components/utils/firestoreHelpers";
 
 /*
   IntroPage Responsibilities:

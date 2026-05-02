@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Message2 from "../sender/Message 2/LoveCardPage";
-import Message3 from "../sender/Invitation/InvitePage";
-import Letter from "../sender/Letter/LetterContainer"
+import Message2 from "../../features/sender/message/LoveCardPage";
+import Message3 from "../../features/sender/Invitation/InvitePage";
+import Letter from "../../features/sender/Letter/LetterContainer"
 import GenerateUrl from "../sender/GenerateURL";
 import IntroductionLetter from "../receiver/Introduction/IntroductionLetter";
 

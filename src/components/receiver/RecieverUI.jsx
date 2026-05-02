@@ -4,7 +4,7 @@ import FinalMessage from "../receiver/FinalMessage";
 import EatMe from "../games/eatMe/EatMe";
 import Puzzle from "../games/puzzle/Puzzle";
 import ChaseMyHeart from "../games/chasemyHeart/ChaseMyHeart";
-import Envelope from "../sender/EnvelopeGate";
+import Envelope from "../../features/sender/EnvelopeGate";
 import Ending from "./Ending";
 import PreviewLetter from "./Introduction/previewLetter";
 

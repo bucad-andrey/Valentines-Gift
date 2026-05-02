@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import LetterView from '../../sender/Letter/LetterView';
-import { useLetter } from '../../sender/Letter/useLetter';
+import LetterView from '../../../features/sender/Letter/LetterView';
+import { useLetter } from '../../../features/sender/Letter/useLetter';
 import { fetchMessage } from '../../utils/firestoreHelpers';
 
 
