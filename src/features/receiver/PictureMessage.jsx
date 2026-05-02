@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoveCard from "../sender/message/LoveCard";
-import { auth } from "../../components/utils/firestore";
-import { fetchLoveCards } from "../../components/utils/firestoreHelpers";
+import { auth } from "../../config/firestore";
+import { fetchLoveCards } from "../../config/firestoreHelpers";
 
 function PictureMessage({userId}) {
   const navigate = useNavigate();

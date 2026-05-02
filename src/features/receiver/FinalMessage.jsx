@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../components/utils/firestore";
-import { fetchLatestFinalMessage, saveFinalResponse } from "../../components/utils/firestoreHelpers";
+import { auth } from "../../config/firestore";
+import { fetchLatestFinalMessage, saveFinalResponse } from "../../config/firestoreHelpers";
 
 function extractYouTubeId(url) {
   try {

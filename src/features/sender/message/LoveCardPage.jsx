@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LoveCard from "./LoveCard";
-import { auth } from "../../../components/utils/firestore";
-import { fetchLoveCards, saveLoveCard } from "../../../components/utils/firestoreHelpers";
+import { auth } from "../../../config/firestore";
+import { fetchLoveCards, saveLoveCard } from "../../../config/firestoreHelpers";
 
 function LovePage() {
   const [isSaving, setIsSaving] = useState(false);

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../../../components/utils/firestore";
+import { auth, db } from "../../../config/firestore";
 import { doc, getDoc } from "firebase/firestore";
-import { saveMessageWithImage } from "../../../components/utils/firestoreHelpers";
+import { saveMessageWithImage } from "../../../config/firestoreHelpers";
 import { useLetter } from "./useLetter";
 import LetterView from "./LetterView";
-import { fetchMessage } from "../../../components/utils/firestoreHelpers";
+import { fetchMessage } from "../../../config/firestoreHelpers";
 
 export default function LetterContainer() {
   const letter = useLetter("");

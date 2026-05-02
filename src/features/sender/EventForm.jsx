@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Header from "../../components/ui/Header";
-import MainContent from "../../components/ui/MainContent";
+import Header from "../../shared/ui/Header";
+import MainContent from "../../shared/ui/MainContent";
 
 function EventForm() {
   return (

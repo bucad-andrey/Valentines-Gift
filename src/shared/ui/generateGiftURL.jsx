@@ -1,6 +1,6 @@
 import { collection, getDocs, doc, setDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
-import { db } from "../utils/firestore";
+import { db } from "../../config/firestore";
 
 /**
  * Debug version of generateGiftURL
