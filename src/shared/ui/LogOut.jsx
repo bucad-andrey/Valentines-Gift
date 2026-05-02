@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { signOut } from "firebase/auth";
-import { auth } from "../utils/firestore";
+import { auth } from "../../config/firestore";
 
 function LogOut() {
   const logOut = async () => {
