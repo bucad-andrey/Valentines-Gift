@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import generateGiftURL from '../../shared/ui/generateGiftURL'
-import { auth } from '../../config/firestore';
+import generateGiftURL from '../../../shared/ui/generateGiftURL'
+import { auth } from '../../../config/firestore';
 
 function generatedUrl() {
   const [generatedUrl, setGeneratedUrl] = useState()
