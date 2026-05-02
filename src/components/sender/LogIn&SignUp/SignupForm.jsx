@@ -1,25 +1,14 @@
 import React, { useState } from "react";
 import { AUTH_VIEW } from "./constants";
 import { useAuth } from "./useAuth";
+import './romantic.css';
+
 
 export default function SignupForm({ navigate }) {
   const { signup, loading, error } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
-  const createSenderDocument = async (user) => {
-    try {
-      await setDoc(doc(db, "Senders", user.uid), {
-        email: user.email,
-        name: user.displayName || name || "",
-        createdAt: Date.now(),
-      });
-    } catch (err) {
-      console.error("Firestore error:", err);
-    }
-  };
 
   const handleSignup = async () => {
     try {
@@ -38,14 +27,14 @@ export default function SignupForm({ navigate }) {
       <h2 className="text-2xl font-bold">Signup</h2>
 
       <input
-        className="w-full border p-2"
+        className="rounded-input"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
 
       <input
-        className="w-full border p-2"
+        className="rounded-input"
         type="password"
         placeholder="Password"
         value={password}

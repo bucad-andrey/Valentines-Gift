@@ -55,13 +55,13 @@ export default function LoginForm({ navigate }) {
       <button
         onClick={handleLogin}
         disabled={loading}
-        className="w-full text-white p-2 rounded"
+        className="w-full bg-green-500 text-white p-2 rounded"
       >
         {loading ? "Loading..." : "Login"}
       </button>
 
       <button onClick={signInWithGoogle}
-        className="w-full bg-green-500 text-white p-2 rounded">
+        className="w-full bg-[#1a1a1a] text-white p-2 rounded">
         <span className="flex items-center gap-2 justify-center">
           <img src="/google.webp" alt="Google" className="w-5 h-5" /> 
           <span className="text-white">Login with Google</span>
@@ -69,7 +69,7 @@ export default function LoginForm({ navigate }) {
       </button>
 
 
-      <button onClick={() => navigate(AUTH_VIEW.SIGNUP)} className="w-full bg-red-500 text-white p-2 rounded">
+      <button onClick={() => navigate(AUTH_VIEW.SIGNUP)} className="w-full bg-[#1a1a1a] text-white p-2 rounded">
         Create new account
       </button>
 

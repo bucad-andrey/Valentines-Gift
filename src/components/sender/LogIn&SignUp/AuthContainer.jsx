@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AUTH_VIEW } from "./constants";
+import FloatingEmojis from "./FloatingEmojis";
 
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import ForgotPassword from "./ForgotPassword";
 import VerifyEmail from "./VerifyEmail";
+import Content from "./Content";
 
 // FUNCTIONALITY: animation variants for sliding effect
 const slideVariants = {
@@ -68,8 +70,15 @@ export default function AuthContainer() {
   return (
     <div className="h-screen w-full flex">
       {/* LEFT SIDE (decorative / branding) */}
-      <div className="w-1/2 bg-gradient-to-br from-purple-600 to-blue-500 flex items-center justify-center text-white">
-        <h1 className="text-4xl font-bold">Welcome</h1>
+      <div
+        className="w-1/2 relative overflow-hidden
+        bg-gradient-to-br from-primary-soft to-secondary-soft
+        flex items-center justify-center">
+        {/* FUNCTIONALITY: background emoji animation */}
+        <FloatingEmojis count={20} />
+
+        {/* FUNCTIONALITY: content wrapper */}
+        <Content />
       </div>
 
       {/* RIGHT SIDE (forms) */}
