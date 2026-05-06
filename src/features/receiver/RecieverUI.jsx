@@ -14,7 +14,7 @@ function RecieverUI() {
   console.log("🎁 Receiver giftId:", giftId);
 
   return (
-    <main className="pt-6 md:px-6">
+    <main className="pt-6 md:px-6 bg-gradient-to-br from-primary-soft to-secondary-soft">
 
       <Routes>
         {/* Default entry */}

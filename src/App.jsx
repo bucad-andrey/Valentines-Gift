@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateForm from "./features/auth/AuthContainer";
-import EventForm from "./features/sender/EventForm";
+import EventForm from "./features/sender/core/EventForm";
 import ReceiverUI from "./features/receiver/RecieverUI";
 import { useAuth } from "./hooks/userAuth";
 

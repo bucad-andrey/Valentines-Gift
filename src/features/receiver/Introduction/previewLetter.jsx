@@ -2,8 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../config/firestore";
 import { useNavigate } from "react-router-dom";
+import LetterDecor from "../../sender/Letter/LetterDecor";
 
 
+/*
+DISPLAY THE LETTER PROPERLY
+
+
+*/
 function PreviewLetter({userId}) {
   const [text, setText] = useState("");
   const [pages, setPages] = useState([]);
@@ -12,6 +18,8 @@ function PreviewLetter({userId}) {
   const [hasSkipped, setHasSkipped] = useState(false);
   const typingIntervalRef = useRef(null);
   const navigate = useNavigate();
+
+  const measureRef = useRef(null);
 
   useEffect(() => {
     if (!userId) return;
@@ -47,17 +55,61 @@ function PreviewLetter({userId}) {
     };
   }, []);
 
+  // FUNCTIONALITY: paginate text while preserving formatting
   useEffect(() => {
-    const maxCharsPerPage = 500;
-    const split = [];
+    if (!text || !measureRef.current) return;
 
-    for (let i = 0; i < text.length; i += maxCharsPerPage) {
-      split.push(text.slice(i, i + maxCharsPerPage));
-    }
+    // FUNCTIONALITY: split into tokens (words, spaces, line breaks)
+    const tokens = text.split(/(\s+)/); 
+    // keeps spaces + \n as separate items
 
-    setPages(split);
+    const newPages = [];
+    let currentPage = "";
+
+    const maxHeight = 500;
+
+    tokens.forEach((token) => {
+      const testPage = currentPage + token;
+
+      measureRef.current.innerText = testPage;
+
+      if (measureRef.current.scrollHeight > maxHeight) {
+        
+        // FUNCTIONALITY: handle extremely long word (hyphenation)
+        if (!currentPage.trim()) {
+          let partial = "";
+
+          for (let i = 0; i < token.length; i++) {
+            const test = partial + token[i];
+
+            measureRef.current.innerText = test + "-";
+
+            if (measureRef.current.scrollHeight > maxHeight) {
+              newPages.push(partial + "-");
+              currentPage = token.slice(i);
+              return;
+            }
+
+            partial = test;
+          }
+        } else {
+          newPages.push(currentPage);
+          currentPage = token;
+        }
+
+      } else {
+        currentPage = testPage;
+      }
+    });
+
+    if (currentPage) newPages.push(currentPage);
+
+    console.log("Pages (formatted):", newPages);
+
+    setPages(newPages);
     setCurrentPage(0);
-  }, [text]);
+
+}, [text]);
 
   useEffect(() => {
     let index = 0;
@@ -113,24 +165,20 @@ function PreviewLetter({userId}) {
   };
 
   return (
-    <section
-      className="
-      bg-linear-to-br from-primary-soft to-secondary-soft
-      w-full min-h-screen
-      md:flex flex-col
-      items-center"
-    >
+    <section className="w-full min-h-screen md:flex flex-col items-center">
       <div className="block lg:flex justify-center items-center relative">  
         <img
           src="/letterBG.svg"
           alt="Letter Background"
           className="
-          w-[400px] h-auto object-contain 
-          block
+          w-[400px] h-auto 
+          object-contain block
           
-          lg:w-[700px] lg:h-[650px]
-          "
+          lg:w-[700px] lg:h-[650px]"
         />
+
+        {/* FUNCTIONALITY: decorative animated images (on top layer) */}
+        <LetterDecor styling={"absolute inset-0 z-20 pointer-events-none flex justify-center"}/>
 
         {/* Page indicator (top-right of letter area) */}
         {pages.length > 0 && (
@@ -142,6 +190,7 @@ function PreviewLetter({userId}) {
         )}
 
         <div
+          ref={measureRef}
           className="
               absolute top-1/2 left-1/2
               -translate-x-1/2 -translate-y-1/2
@@ -154,8 +203,7 @@ function PreviewLetter({userId}) {
               tracking-wide 
               text-black
 
-              whitespace-pre-wrap
-            "
+              whitespace-pre-wrap"
         >
           {animatedText}
         </div>
@@ -163,12 +211,11 @@ function PreviewLetter({userId}) {
 
       <div
         className="
-      flex gap-4 mt-10 
-      overflow-scroll relative
-      
-      md:absolute md:bottom-1
-      md:overflow-hidden"
-      >
+        flex gap-4 mt-10 
+        overflow-scroll relative
+        
+        md:absolute md:bottom-1
+        md:overflow-hidden">
         <button
           onClick={handleSkip}
           disabled={hasSkipped || pages.length === 0}

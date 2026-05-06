@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Message2 from "../../features/sender/message/LoveCardPage";
 import Message3 from "../../features/sender/Invitation/InvitePage";
 import Letter from "../../features/sender/Letter/LetterContainer"
-import GenerateUrl from "../../features/sender/GenerateURL";
+import GenerateUrl from "../../features/sender/core/GenerateURL";
 import IntroductionLetter from "../../features/receiver/Introduction/IntroductionLetter";
 
 function MainContent() {
