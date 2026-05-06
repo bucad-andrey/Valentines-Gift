@@ -1,6 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import LetterDecor from "./LetterDecor";
+import GuideOverlay from "../../../shared/guide/GuideOverlay";
+import GuideModal from "../../../shared/guide/GuideModal";
+import { useGuideModal } from "../../../shared/guide/useGuideModal";
+import { LETTER_GUIDE } from "../../../shared/constant/useGuideText";
 
 // FUNCTIONALITY: render UI only
 export default function LetterView({
@@ -13,13 +17,19 @@ export default function LetterView({
   isSaving,
   saveStatus,
 }) {
-
+  const { isOpen, openGuide, closeGuide } = useGuideModal();
   
   return (
     <section className="
     w-full min-h-screen 
     lg:flex flex-col
     items-center">
+
+      <GuideModal isOpen={isOpen} onClose={closeGuide}>
+        <p className="text-green-500">
+          {LETTER_GUIDE}
+        </p>
+      </GuideModal>
 
       {/* FUNCTIONALITY: letter layout */}
       <div className="relative flex justify-center items-center">
@@ -45,6 +55,7 @@ export default function LetterView({
         {/* FUNCTIONALITY: text input */}
         <textarea
           value={pages[currentPage] || ""}
+          onFocus={openGuide}
           onChange={(e) => updatePage(e.target.value)}
           className="
           z-40
@@ -75,7 +86,7 @@ export default function LetterView({
         flex gap-4 mt-5 relative
         
         md:bottom-15
-        md:justify-center md:z-50 
+        md:justify-center md:z-30 
         
 
         lg:absolute lg:overflow-hidden
