@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import LetterDecor from "./LetterDecor";
-import GuideOverlay from "../../../shared/guide/GuideOverlay";
+import GuideTrigger from "../../../shared/guide/GuideTrigger";
 import GuideModal from "../../../shared/guide/GuideModal";
 import { useGuideModal } from "../../../shared/guide/useGuideModal";
 import { LETTER_GUIDE } from "../../../shared/constant/useGuideText";
@@ -33,6 +33,14 @@ export default function LetterView({
 
       {/* FUNCTIONALITY: letter layout */}
       <div className="relative flex justify-center items-center">
+        
+        <GuideTrigger
+          onClick={openGuide}
+          className="
+            absolute
+            bottom-4 right-4
+            z-50
+          "/>
 
         <img
           src="/letterBG.svg"
@@ -55,7 +63,6 @@ export default function LetterView({
         {/* FUNCTIONALITY: text input */}
         <textarea
           value={pages[currentPage] || ""}
-          onFocus={openGuide}
           onChange={(e) => updatePage(e.target.value)}
           className="
           z-40
@@ -79,16 +86,11 @@ export default function LetterView({
         />
       </div>
 
-       
-
       {/* FUNCTIONALITY: controls */}
       <div className="
         flex gap-4 mt-5 relative
-        
         md:bottom-15
         md:justify-center md:z-30 
-        
-
         lg:absolute lg:overflow-hidden
         lg:bottom-1">
         {/* Save */}
