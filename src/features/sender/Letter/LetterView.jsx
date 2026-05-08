@@ -5,6 +5,7 @@ import GuideTrigger from "../../../shared/guide/GuideTrigger";
 import GuideModal from "../../../shared/guide/GuideModal";
 import { useGuideModal } from "../../../shared/guide/useGuideModal";
 import { LETTER_GUIDE } from "../../../shared/constant/useGuideText";
+import GuideOverlayed from "../../../shared/guide/GuideOverlayed";
 
 // FUNCTIONALITY: render UI only
 export default function LetterView({
@@ -25,23 +26,12 @@ export default function LetterView({
     lg:flex flex-col
     items-center">
 
-      <GuideModal isOpen={isOpen} onClose={closeGuide}>
-        <p className="text-green-500">
-          {LETTER_GUIDE}
-        </p>
-      </GuideModal>
+      <GuideOverlayed 
+      guideText={LETTER_GUIDE} 
+      />
 
       {/* FUNCTIONALITY: letter layout */}
       <div className="relative flex justify-center items-center">
-        
-        <GuideTrigger
-          onClick={openGuide}
-          className="
-            absolute
-            bottom-4 right-4
-            z-50
-          "/>
-
         <img
           src="/letterBG.svg"
           alt="Letter Background"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AUTH_VIEW } from "./constants";
-import { useAuth } from "./useAuth";
+import { AUTH_VIEW } from "../hooks/constants";
+import { useAuth } from "../hooks/useAuth";
 
 export default function ForgotPassword({ navigate }) {
   const { resetPassword, loading, error } = useAuth();

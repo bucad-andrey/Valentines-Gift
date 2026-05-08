@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+.guide {
+  @apply 
+  fixed 
+  z-30
+  right-4
+  bottom-5
+  
+  lg:right-10 
+  lg:bottom-10 
+}

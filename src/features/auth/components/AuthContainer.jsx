@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AUTH_VIEW } from "./constants";
+import { AUTH_VIEW } from "../hooks/constants";
 import FloatingEmojis from "./FloatingEmojis";
 
 import LoginForm from "./LoginForm";

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import generateGiftURL from '../../../shared/ui/generateGiftURL'
+import generateGiftURL from './generateGiftURL'
 import { auth } from '../../../config/firestore';
+import GuideOverlayed from '../../../shared/guide/GuideOverlayed';
+import { LETTER_GUIDE } from '../../../shared/constant/useGuideText';
 
 function generatedUrl() {
   const [generatedUrl, setGeneratedUrl] = useState()
@@ -16,13 +18,15 @@ function generatedUrl() {
     }
   }
 
-
   return (
     <section className='flex justify-center items-center flex-col space-y-10'>
+      <GuideOverlayed
+        guideText={LETTER_GUIDE} 
+      />
+      
       <button onClick={handleGenerate} className=''>
         Generate Url
       </button>
-
       <a href={generatedUrl} target='_blank'>
         {generatedUrl}
       </a>

@@ -1,5 +1,5 @@
 import React from "react";
-import { AUTH_VIEW } from "./constants";
+import { AUTH_VIEW } from "../hooks/constants";
 
 export default function VerifyEmail({ navigate }) {
   console.log("Render: VerifyEmail");

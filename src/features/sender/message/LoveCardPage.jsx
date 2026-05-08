@@ -6,6 +6,8 @@ import LovePageStatus from "./LovePageStatus";
 import LoveCardsGrid from "./LoveCardsGrid";
 
 import { useLoveCards } from "./useLoveCards";
+import GuideOverlayed from "../../../shared/guide/GuideOverlayed";
+import { LETTER_GUIDE } from "../../../shared/constant/useGuideText";
 
 // FUNCTIONALITY: composition layer for love page
 function LovePage() {
@@ -21,8 +23,9 @@ function LovePage() {
 
   return (
     <section className="px-2 min-h-screen">
-
-      <LoveGuide />
+      <GuideOverlayed 
+        guideText={LETTER_GUIDE}
+      />
 
       <div className="max-w-5xl mx-auto space-y-6">
 

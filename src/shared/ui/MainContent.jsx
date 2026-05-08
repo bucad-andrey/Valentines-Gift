@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Message2 from "../../features/sender/message/LoveCardPage";
-import Message3 from "../../features/sender/Invitation/InvitePage";
+import Memories from "../../features/sender/message/LoveCardPage";
+import Invitation from "../../features/sender/Invitation/InvitePage";
 import Letter from "../../features/sender/Letter/LetterContainer"
-import GenerateUrl from "../../features/sender/core/GenerateURL";
+import GenerateUrl from "../../features/sender/url/GenerateURL";
 import IntroductionLetter from "../../features/receiver/Introduction/IntroductionLetter";
 
 function MainContent() {
@@ -13,9 +13,8 @@ function MainContent() {
         <Route path="/" element={<Navigate to="/letter" replace />} />
         <Route path="letter" element={<Letter/>} />
         <Route paht='/preview' element={<IntroductionLetter />} />
-        <Route path="/message2" element={<Message2 />} />
-        <Route path="/message3" element={<Message3 />} />
-        <Route path="/letter" element={<Letter />} />
+        <Route path="/memories" element={<Memories />} />
+        <Route path="/invitation" element={<Invitation />} />
         <Route path="/generateUrl" element={<GenerateUrl />} />
       </Routes>
 

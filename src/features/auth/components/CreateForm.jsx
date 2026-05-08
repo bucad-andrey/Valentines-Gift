@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { db, auth, googleProvider } from "../../components/utils/firestore";
 import { setDoc, doc } from "firebase/firestore";
 import { signInWithPopup, signOut } from "firebase/auth";
-import "./romantic.css";
+import "../romantic.css";
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function CreateForm() {

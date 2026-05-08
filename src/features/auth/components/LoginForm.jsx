@@ -1,8 +1,8 @@
 // FUNCTIONALITY: login UI + firebase integration
 import React, { useState } from "react";
-import { AUTH_VIEW } from "./constants";
-import { useAuth } from "./useAuth";
-import "./romantic.css";
+import { AUTH_VIEW } from "../hooks/constants";
+import { useAuth } from "../hooks/useAuth";
+import "../romantic.css";
 
 export default function LoginForm({ navigate }) {
   const { login, loading, error, signInWithGoogle } = useAuth();

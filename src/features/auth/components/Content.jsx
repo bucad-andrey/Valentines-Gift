@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from "framer-motion";
-import './romantic.css';
+import '../romantic.css';
 
 function Content() {
   return (

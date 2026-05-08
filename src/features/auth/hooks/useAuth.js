@@ -9,7 +9,7 @@ import {
 
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
-import { auth, db, googleProvider } from "../../config/firestore";
+import { auth, db, googleProvider } from "../../../config/firestore";
 
 export function useAuth() {
   const [loading, setLoading] = useState(false);
