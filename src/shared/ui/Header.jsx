@@ -24,7 +24,8 @@ function Header() {
     "letter", 
     "memories",
     "invitation", 
-    "generateUrl"
+    "generateUrl",
+    "puzzle"
   ];
 
   /* =========================

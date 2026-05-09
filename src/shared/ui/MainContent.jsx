@@ -4,6 +4,7 @@ import Invitation from "../../features/sender/Invitation/InvitePage";
 import Letter from "../../features/sender/Letter/LetterContainer"
 import GenerateUrl from "../../features/sender/url/GenerateURL";
 import IntroductionLetter from "../../features/receiver/Introduction/IntroductionLetter";
+import PuzzleInput from "../../features/sender/game/puzzleUploader/components/PuzzleUploader";
 
 function MainContent() {
   return (
@@ -15,6 +16,7 @@ function MainContent() {
         <Route paht='/preview' element={<IntroductionLetter />} />
         <Route path="/memories" element={<Memories />} />
         <Route path="/invitation" element={<Invitation />} />
+        <Route path="/puzzle" element={<PuzzleInput userEmail={"Y3cWoMJV05dTCdKQSlvGzb65gPh1"}/>} />
         <Route path="/generateUrl" element={<GenerateUrl />} />
       </Routes>
 
